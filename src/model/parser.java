@@ -8,12 +8,11 @@ public class parser {  // Keeping lowercase name as per your request
 
     // This class gathers data from given file names/directories
     private ArrayList<String> fileNames;
-    private ArrayList<String> data;
     private boolean statusParsed;
 
     public parser() {
         this.fileNames = new ArrayList<String>();
-        this.data = new ArrayList<>();
+        ArrayList<String> data = new ArrayList<>();
         this.statusParsed = false;
     }
 
