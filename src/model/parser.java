@@ -1,7 +1,7 @@
-package main;
-import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.lang.String;
+package model;
+import java.util.*;
+import java.io.*;
+import java.lang.*;
 
 
 public class parser {  // Keeping lowercase name as per your request
@@ -12,7 +12,7 @@ public class parser {  // Keeping lowercase name as per your request
     private boolean statusParsed;
 
     public parser() {
-        this.fileNames = new ArrayList<>();
+        this.fileNames = new ArrayList<String>();
         this.data = new ArrayList<>();
         this.statusParsed = false;
     }
@@ -32,10 +32,17 @@ public class parser {  // Keeping lowercase name as per your request
         return this.statusParsed;
     }
 
+    public void parseFiles() {
+        // Implement code here
+    }
+
+    public void printFiles() {
+        // Implment printing all given files
+    }
+
     public void resetParser(boolean fullReset) {
         if (fullReset) {
-            this.fileNames.clear(); // Reset file names list
-            this.data.clear(); // Reset data list
+            this.fileNames = new ArrayList<String>();
         }
         this.statusParsed = false;
     }
