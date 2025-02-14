@@ -2,6 +2,7 @@ package model;
 import org.junit.Test;
 import org.junit.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -35,5 +36,6 @@ public class parserTests {
         check1.remove("test1.txt");
         assertEquals(test_parser.getFiles(), check1);
     }
+
 
 }

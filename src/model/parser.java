@@ -9,10 +9,11 @@ public class parser {
     // This class gathers data from given file names/directories
     private ArrayList<String> fileNames;
     private boolean statusParsed;
+    private ArrayList<String> data;
 
     public parser() {
         this.fileNames = new ArrayList<String>();
-        ArrayList<String> data = new ArrayList<>();
+        this.data = new ArrayList<>();
         this.statusParsed = false;
     }
 
@@ -21,22 +22,37 @@ public class parser {
         this.fileNames.add(fileName);
     }
 
-
     public boolean parserStatus() {
         // Getter method for current parser status
         return this.statusParsed;
     }
 
     public void parseFiles() throws FileNotFoundException {
-        // Implement code here
+        ArrayList<String> data = new ArrayList<>();
+        // Iterate over all file names
         for (int i = 0; i < this.fileNames.size(); i++) {
             File curr_file = new File(this.fileNames.get(i));
-            Scanner reader = new Scanner(curr_file);
-            // Here, we iterate through the first line, gathering the information
 
+            // We use the try-catch block to catch errosr when file is not found
+            try (BufferedReader reader = new BufferedReader(new FileReader(curr_file))) {
+                String line_data;
+                boolean first = true;
+                while ( (line_data = reader.readLine()) != null) {
+                    if (first) {
+                        // need to find good format to place code within given file
+                    }
+                    // Debugging code
+                    System.out.println(line_data);
+                    data.add(line_data); // where we add the data to our temp array
+                }
+            } catch (IOException e) { // Handles both FileNotFoundException and IOException, based on documentation of BufferReader????
+                System.err.println("Error: File not found or issue reading - " + this.fileNames.get(i));
+            }
         }
         this.statusParsed = true;
+        this.data = data;
     }
+
 
     public void printPendingFiles() {
         // Implement printing all given files
