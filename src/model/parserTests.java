@@ -1,9 +1,7 @@
 package model;
 import org.junit.Test;
-import org.junit.*;
-
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +10,13 @@ public class parserTests {
     public void testParserStatus() {
         parser test_parser = new parser();
         assertFalse(test_parser.parserStatus());
+    }
+
+    @Test(expected = FileNotFoundException.class)
+    public void noFileFound() throws FileNotFoundException {
+        parser test_parser = new parser();
+        test_parser.loadFile("noFileFound.txt");
+        test_parser.parseFiles();
     }
 
     @Test

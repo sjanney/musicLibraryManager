@@ -9,7 +9,7 @@ public class parser {
     // This class gathers data from given file names/directories
     private ArrayList<String> fileNames;
     private boolean statusParsed;
-    private ArrayList<String> data;
+    private ArrayList<ArrayList<ArrayList<String>>> data;
 
     public parser() {
         this.fileNames = new ArrayList<String>();
@@ -28,40 +28,57 @@ public class parser {
     }
 
     public void parseFiles() throws FileNotFoundException {
-        ArrayList<String> data = new ArrayList<>();
+        // We clear all the previous data that we had, so we can parse the new data
+        this.data.clear();
+
         // Iterate over all file names
         for (int i = 0; i < this.fileNames.size(); i++) {
             File curr_file = new File(this.fileNames.get(i));
 
-            // We use the try-catch block to catch errosr when file is not found
-            try (BufferedReader reader = new BufferedReader(new FileReader(curr_file))) {
+            // We use BufferedReader to gahter all elements from the given file
+            BufferedReader reader = new BufferedReader(new FileReader(curr_file));
+            try (reader) {
+                // We define all the arrays that we need to hold all of our data
+
+                // Stores [header, songs]
+                ArrayList<ArrayList<String>> curr_file_lines = new ArrayList<>();
+                ArrayList<String> header = new ArrayList<>();
+                ArrayList<String> songs = new ArrayList<>();
+
+                // Holds current line data
                 String line_data;
-                boolean first = true;
-                while ( (line_data = reader.readLine()) != null) {
-                    if (first) {
-                        // need to find good format to place code within given file
+                // Reset for each file, since we use it to hold the header of the file
+                boolean first_line = true;
+                line_data = reader.readLine();
+                while (line_data != null) {
+                    // we handoe the data differently if we come in contact with list
+                    if (first_line) {
+                        // First line is the header
+                        String[] headerArray = line_data.split(",");  // Split the line into an array
+                        for (int j = 0; j < headerArray.length; j++) {
+                            header.add(headerArray[j]);  // Add each element to the header list
+                        }
+                        first_line = false;
+                    } else {
+                        songs.add(line_data);
                     }
-                    // Debugging code
+                    // just chekcing statement, will remove
                     System.out.println(line_data);
-                    data.add(line_data); // where we add the data to our temp array
+                    line_data = reader.readLine();
                 }
-            } catch (IOException e) { // Handles both FileNotFoundException and IOException, based on documentation of BufferReader????
-                System.err.println("Error: File not found or issue reading - " + this.fileNames.get(i));
+
+                // Store this file’s data as [header, songs]
+                curr_file_lines.add(header);
+                curr_file_lines.add(songs);
+                this.data.add(curr_file_lines);
+
+            } catch (IOException e) {
+                System.err.println("Error: File not found or issue reading files");
             }
         }
         this.statusParsed = true;
-        this.data = data;
     }
 
-
-    public void printPendingFiles() {
-        // Implement printing all given files
-        String begining = "Current files: ";
-        for (int i = 0; i < this.fileNames.size(); i++) {
-            System.out.print(begining + this.fileNames.get(i));
-        }
-        System.out.println();
-    }
 
     public void resetParser() {
             this.fileNames = new ArrayList<String>();
@@ -74,5 +91,9 @@ public class parser {
 
     public ArrayList<String> getFiles() {
         return new ArrayList<>(this.fileNames);
+    }
+
+    public void showData() {
+        System.out.println(this.data.toString());
     }
 }

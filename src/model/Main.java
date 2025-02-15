@@ -10,5 +10,6 @@ public class Main {
         test_parser.loadFile("test.txt");
         test_parser.parseFiles();
         System.out.println("Printed File");
+        test_parser.showData();
     }
 }
