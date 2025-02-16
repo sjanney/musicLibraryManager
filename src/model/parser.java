@@ -93,7 +93,6 @@ public class parser {
                             songs.add(line_data);
                         }
                         // just chekcing statement, will remove
-                        System.out.println(line_data);
                         line_data = reader.readLine();
                     }
 
