@@ -41,6 +41,25 @@ public class parserTests {
         check1.remove("test1.txt");
         assertEquals(test_parser.getFiles(), check1);
     }
+    @Test
+    public void testParserFileReading() throws FileNotFoundException {
+        parser test_parser = new parser();
+        assertFalse(test_parser.parserStatus()); // parser not ran yet, should be false
+        test_parser.loadFile("test.txt");
+        test_parser.parseFiles();
+        assertTrue(test_parser.parserStatus());
+        test_parser.parseFiles(); // Should not run, since all files have already been ran
 
+    }
+
+    @Test
+    public void testParserReset() throws FileNotFoundException {
+        parser test_parser = new parser();
+        assertFalse(test_parser.parserStatus());
+        test_parser.loadFile("test.txt");
+        test_parser.parseFiles();
+        test_parser.resetParser();
+        assertFalse(test_parser.parserStatus());
+    }
 
 }
