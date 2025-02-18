@@ -1,7 +1,7 @@
 /*
- * File: parser.java
+ * File: Parser.java
  * Author: Shane Janney
- * Description: This parser class gathers all the information from the inputted files and converts them strucutres to be manipulated
+ * Description: This Parser class gathers all the information from the inputted files and converts them strucutres to be manipulated
  */
 
 // Necessary packaes and libraries
@@ -11,9 +11,9 @@ import java.io.*;
 import java.lang.*;
 
 
-public class parser {
+public class Parser {
     /*
-     * class parser(): This class parses through inputted files and converts them into predicitable strucutres
+     * class Parser(): This class parses through inputted files and converts them into predicitable strucutres
      * so that we can properly process them into different types of classes or any other type of use within
      * the program
      *
@@ -27,12 +27,12 @@ public class parser {
      *
      * Methods:
      *  - public void loadFile(String fileName): This method loads in a specific file of data
-     *  - public boolean parserStatus(): Returns the parser status
+     *  - public boolean parserStatus(): Returns the Parser status
      *  - parseFiles(): This method parses all of the inputted files
-     *  - resetParser(): Resets parser completely, allows parsing again
-     *  - removeFile(String fileName): Removes file from parser to not retrieve it's data
-     *  - getFiles(): Returns all files within parser that will be scrapped for data
-     *  - showData(): Shows all the data collected from the parser
+     *  - resetParser(): Resets Parser completely, allows parsing again
+     *  - removeFile(String fileName): Removes file from Parser to not retrieve it's data
+     *  - getFiles(): Returns all files within Parser that will be scrapped for data
+     *  - showData(): Shows all the data collected from the Parser
      */
 
     // This class gathers data from given file names/directories
@@ -40,19 +40,19 @@ public class parser {
     private boolean statusParsed;
     private ArrayList<ArrayList<ArrayList<String>>> data;
 
-    public parser() {
+    public Parser() {
         this.fileNames = new ArrayList<String>();
         this.data = new ArrayList<>();
         this.statusParsed = false;
     }
 
     public void loadFile(String fileName) {
-        // Loads new file into parser
+        // Loads new file into Parser
         this.fileNames.add(fileName);
     }
 
     public boolean parserStatus() {
-        // Getter method for current parser status
+        // Getter method for current Parser status
         return this.statusParsed;
     }
 

@@ -8,26 +8,26 @@ import static org.junit.Assert.*;
 public class parserTests {
     @Test
     public void testParserStatus() {
-        parser test_parser = new parser();
+        Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
     }
 
     @Test(expected = FileNotFoundException.class)
     public void noFileFound() throws FileNotFoundException {
-        parser test_parser = new parser();
+        Parser test_parser = new Parser();
         test_parser.loadFile("noFileFound.txt");
         test_parser.parseFiles();
     }
 
     @Test
     public void testParserFileEntry() {
-        // Testing if files are correctly loaded into the parser
-        parser test_parser = new parser();
+        // Testing if files are correctly loaded into the Parser
+        Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
         test_parser.loadFile("test1.txt");
         test_parser.loadFile("test2.txt");
         test_parser.loadFile("test3.txt");
-        // Check if files are within parser
+        // Check if files are within Parser
         ArrayList<String> check1 = new ArrayList<String>();
         check1.add("test1.txt");
         check1.add("test2.txt");
@@ -43,8 +43,8 @@ public class parserTests {
     }
     @Test
     public void testParserFileReading() throws FileNotFoundException {
-        parser test_parser = new parser();
-        assertFalse(test_parser.parserStatus()); // parser not ran yet, should be false
+        Parser test_parser = new Parser();
+        assertFalse(test_parser.parserStatus()); // Parser not ran yet, should be false
         test_parser.loadFile("test.txt");
         test_parser.parseFiles();
         assertTrue(test_parser.parserStatus());
@@ -54,7 +54,7 @@ public class parserTests {
 
     @Test
     public void testParserReset() throws FileNotFoundException {
-        parser test_parser = new parser();
+        Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
         test_parser.loadFile("test.txt");
         test_parser.parseFiles();

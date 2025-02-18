@@ -1,13 +1,15 @@
 package model;
-
 import java.util.ArrayList;
 
-public class dataEntry {
+public class dataConverter {
     // This class manipulates the parsed data, making it easier to input into database
     // Convert possibly to files? May or may not use
-    private ArrayList<ArrayList<String>> file_data;
+    private ArrayList<Albums> albums;
 
-    public dataEntry(ArrayList<ArrayList<String>> data, String conversionType) {
-        this.file_data = data;
+    public dataConverter(pars) {
+        this.albums = new ArrayList<>();
     }
+
+    public Albums convertData()
+
 }
