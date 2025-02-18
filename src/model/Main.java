@@ -9,7 +9,7 @@ public class Main {
         Parser test_parser = new Parser();
         test_parser.loadFile("test.txt");
         test_parser.parseFiles();
-        System.out.println("Printed File");
-        test_parser.showData();
+        DataConverter converter = new DataConverter(test_parser);
+        converter.convertData();
     }
 }

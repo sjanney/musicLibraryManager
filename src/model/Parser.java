@@ -93,7 +93,6 @@ public class Parser {
                             songs.add(line_data);
                         }
                         // just chekcing statement, will remove
-                        System.out.println(line_data);
                         line_data = reader.readLine();
                     }
 
@@ -126,5 +125,9 @@ public class Parser {
 
     public void showData() {
         System.out.println(this.data.toString());
+    }
+
+    public ArrayList<ArrayList<ArrayList<String>>> sendData() {
+        return new ArrayList<>(this.data);
     }
 }
