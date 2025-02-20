@@ -18,8 +18,11 @@ public class Playlist {
         songs.add(song);
     }
 
-    public void removeSong(String songName) {
-        songs.removeIf(song -> song.getSongName().equalsIgnoreCase(songName));
+    public void removeSong(String songName, String artist) {
+        songs.removeIf(song ->
+                song.getSongName().equalsIgnoreCase(songName) &&
+                        song.getArtist().equalsIgnoreCase(artist)
+        );
     }
 
 // something here that plays the current song or something that selects the current song
