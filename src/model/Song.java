@@ -62,5 +62,4 @@ public class Song {
     public void setFavorite(boolean favorite) {
         this.isFavorite = favorite;
     }
-
 }

@@ -1,4 +1,5 @@
-package model;
+package tests;
+import model.Parser;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.util.*;
