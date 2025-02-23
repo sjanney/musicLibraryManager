@@ -1,6 +1,5 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -13,8 +12,11 @@ public class musicStore {
      *
      * Attributes:
      *  album_stock: This is all the current stock of albums that we have on our storefront
+     *  - Data Structre: List of Albums
      *  song_stock: This is all the avalible stock of songs that we have on our storefront
+     *   - Data Structure: Array of Songs
      *  avalible_artists: This is all the artists that we currently carry within our storefront
+     *  - Data Structure: Hashmap of (String) artists that contain all their albums
      *
      *
      * Methods:
@@ -23,15 +25,14 @@ public class musicStore {
      *  loadInventory: This method gathers all the songs within our database and loads them into stock
      *
      */
+
     private ArrayList<Album> album_stock;
     private ArrayList<Song> song_stock;
-    private HashMap<String, ArrayList<Object>> avalible_artists;
 
     public musicStore() {
         // We create our "stock" of music application
         this.album_stock = new ArrayList<>();
         this.song_stock = new ArrayList<>();
-        this.avalible_artists = new HashMap<String, ArrayList<Object>>();
     }
 
     public ArrayList<Album> getAlbums() {
@@ -44,7 +45,7 @@ public class musicStore {
         return new ArrayList<>(song_stock);
     }
 
-    public static void loadInventory() throws FileNotFoundException {
+    public  void loadInventory() throws FileNotFoundException {
         // First we have to load all the possible files that we have into our storefront
 
         // We create a new directory and load all the possible song files
@@ -72,8 +73,47 @@ public class musicStore {
         // We run our parser
         p.parseFiles();
         if (p.parserStatus()) {
-            p.showData();
+            // We use our dataConverter class to create the data into albums
+            DataConverter dataConverter = new DataConverter(p);
+            dataConverter.convertData();
+            // After we do this, we then add this album to our storefront
+            this.album_stock = dataConverter.sendData();
         }
+
+        // After we add our songs to our stock
+        for (int i = 0; i < this.album_stock.size(); i++) {
+            ArrayList<Song> current_songs = this.album_stock.get(i).getTracks();
+            for (int j = 0; j < current_songs.size(); j++) {
+                this.song_stock.add(current_songs.get(j));
+            }
+        }
+
+
+    }
+
+    public ArrayList<Song> searchSong(boolean byArtist, boolean byAlbum, Optional<String> artist, Optional album) {
+        // We search based on either artist name or by album name
+        if (byArtist) {
+            ArrayList<Song> result = new ArrayList<Song>();
+            for (int i = 0; i < this.album_stock.size(); i++) {
+                Album curr_album = this.album_stock.get(i);
+                String curr_artist = curr_album.getArtist();
+                if (artist.equals(curr_artist)) {
+                    // .addAll allows us to add all the related songs to our result list without creating
+                    // another for-loop
+                    result.addAll(curr_album.getTracks());
+                }
+            }
+            return result;
+        }
+        else if (byAlbum) {
+            for (int i = 0; i < this.album_stock.size(); i++) {
+                if (this.album_stock.get(i).getTitle().equals(album)) {
+                    return new ArrayList<Song>(this.album_stock.get(i).getTracks());
+                }
+            }
+        }
+        return null;
     }
 
     }

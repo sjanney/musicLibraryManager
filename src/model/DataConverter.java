@@ -27,6 +27,7 @@ public class DataConverter {
             ArrayList<String> data = curr_file.get(1);
 
             //Gathering all important names within fields
+            System.out.println(header);
             String album_name = header.get(0);
             String artist_name = header.get(1);
             String occupation = header.get(2);
@@ -38,21 +39,18 @@ public class DataConverter {
             System.out.println("occupation: " + occupation);
             System.out.println("year: " + year);
             System.out.println("songs: ");
-            for (int j = 0; j < data.size(); j++) {
-                System.out.println(data.get(j));
-            }
-            System.out.println("\n");
 
-            // We first create all the songs sepereately
-            ArrayList<Song> track_list = new ArrayList<>();
-            for (int j = 0; j < data.size(); j++) {
-                // Here we add the given title of the song
-                Song song = new Song();
-            }
-            // We then create the new album based on the list of songs
-            Album album = new Album(); // Will pass in track_list
-            this.albums.add(album); // We then add the album to our list
+            // We first create our album, then add the songs to be
+            int new_year = Integer.parseInt(year);
+            Album curr_album = new Album(album_name,artist_name,new_year);
+            System.out.println("data: " + data);
+            curr_album.addTracks(data);
+            this.albums.add(curr_album);
         }
+    }
+
+    public ArrayList<Album> sendData() {
+        return new ArrayList<Album>(this.albums);
     }
 
     public void showAlbums() {

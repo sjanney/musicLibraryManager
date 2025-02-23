@@ -7,10 +7,12 @@ import static org.junit.Assert.*;
 
 public class musicStoreTest {
     @Test
-    public void test1() throws FileNotFoundException {
+    public  void inital_testing() throws FileNotFoundException {
         musicStore m = new musicStore();
-        musicStore.loadInventory();
-        boolean x = true;
-        assertTrue(x);
+        assertNull(m.getAlbums());
+        assertNull(m.getSongs());
+        // Adding music to inventory
+        m.loadInventory();
+        assertNotNull(m.getAlbums());
     }
 }
