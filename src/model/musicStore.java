@@ -116,4 +116,22 @@ public class musicStore {
         return null;
     }
 
+    public ArrayList<Song> searchAlbum(boolean byArtist,boolean byTitle, Optional<String> artist, Optional<String> albumTitle) {
+        if (byArtist) {
+            for (int i = 0; i < this.album_stock.size(); i++) {
+                if (this.album_stock.get(i).getTitle().equals(artist)) {
+                    return this.album_stock.get(i).getTracks();
+                }
+            }
+        }
+        else if (byTitle) {
+            for (int i = 0; i < this.album_stock.size(); i++) {
+                if (this.album_stock.get(i).getTitle().equals(albumTitle)) {
+                    return this.album_stock.get(i).getTracks();
+                }
+            }
+        }
+        return null;
+    }
+
     }
