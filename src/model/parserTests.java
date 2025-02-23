@@ -1,8 +1,9 @@
-package tests;
-import model.Parser;
+package model;
+
 import org.junit.Test;
+
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 

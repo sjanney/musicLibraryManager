@@ -27,23 +27,21 @@ public class DataConverter {
             ArrayList<String> data = curr_file.get(1);
 
             //Gathering all important names within fields
-            System.out.println(header);
             String album_name = header.get(0);
             String artist_name = header.get(1);
             String occupation = header.get(2);
             String year = header.get(3);
 
             // Debugging information, to make sure everything is working well
-            System.out.println("album_name: " + album_name);
+            /*System.out.println("album_name: " + album_name);
             System.out.println("artist_name: " + artist_name);
             System.out.println("occupation: " + occupation);
             System.out.println("year: " + year);
-            System.out.println("songs: ");
+            System.out.println("songs: "); */
 
             // We first create our album, then add the songs to be
             int new_year = Integer.parseInt(year);
             Album curr_album = new Album(album_name,artist_name,new_year);
-            System.out.println("data: " + data);
             curr_album.addTracks(data);
             this.albums.add(curr_album);
         }

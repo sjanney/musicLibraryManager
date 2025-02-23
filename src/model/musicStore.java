@@ -88,10 +88,9 @@ public class musicStore {
             }
         }
 
-
     }
 
-    public ArrayList<Song> searchSong(boolean byArtist, boolean byAlbum, Optional<String> artist, Optional album) {
+    public ArrayList<Song> searchSong(boolean byArtist, boolean byAlbum, String artist, String album) {
         // We search based on either artist name or by album name
         if (byArtist) {
             ArrayList<Song> result = new ArrayList<Song>();
@@ -116,19 +115,34 @@ public class musicStore {
         return null;
     }
 
-    public ArrayList<Song> searchAlbum(boolean byArtist,boolean byTitle, Optional<String> artist, Optional<String> albumTitle) {
+    public Album searchAlbum(boolean byArtist,boolean byTitle, String artist, String albumTitle) {
         if (byArtist) {
             for (int i = 0; i < this.album_stock.size(); i++) {
-                if (this.album_stock.get(i).getTitle().equals(artist)) {
-                    return this.album_stock.get(i).getTracks();
+                String curr_artist = this.album_stock.get(i).getArtist();
+                if (curr_artist.equals(artist)) {
+                    return this.album_stock.get(i).copy();
                 }
             }
         }
+
         else if (byTitle) {
             for (int i = 0; i < this.album_stock.size(); i++) {
                 if (this.album_stock.get(i).getTitle().equals(albumTitle)) {
-                    return this.album_stock.get(i).getTracks();
+                    return this.album_stock.get(i).copy();
                 }
+            }
+        }
+        return null;
+    }
+
+    public int albumInventory() {
+        return this.album_stock.size();
+    }
+
+    public Song searchSongByTitle(String title) {
+        for (int i = 0; i < this.song_stock.size(); i++) {
+            if (this.song_stock.get(i).getSongName().equals(title)) {
+                return this.song_stock.get(i).copy();
             }
         }
         return null;

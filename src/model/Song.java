@@ -3,9 +3,9 @@ package model;
 import java.util.Objects;
 
 public class Song {
-    private String songName;
-    private String artist;
-    private String albumTitle;
+    private final String songName;
+    private final String artist;
+    private final String albumTitle;
     private int rating;
     private boolean isFavorite;
 
@@ -13,13 +13,10 @@ public class Song {
         this.songName = songName;
         this.artist = artist;
         this.albumTitle = albumTitle;
-        this.rating = 0;
-        this.isFavorite = false;
     }
 
-
     public String getSongName() {
-        return songName;
+        return this.songName;
     }
 
     public String getArtist() {
@@ -48,4 +45,9 @@ public class Song {
     public void setFavorite(boolean favorite) {
         this.isFavorite = favorite;
     }
+
+    public Song copy() {
+        return new Song(this.songName, this.artist, this.albumTitle);
+    }
+
 }
