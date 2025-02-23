@@ -148,4 +148,14 @@ public class musicStore {
         return null;
     }
 
+    public void sellSong(Song song) {
+        ArrayList<Song> songStock = this.song_stock;
+        songStock.remove(song);
+    }
+
+    public void sellAlbum(Album album) {
+        ArrayList<Song> songStock = this.song_stock;
+        songStock.remove(album);
+    }
+
     }
