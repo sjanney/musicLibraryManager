@@ -1,14 +1,53 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
-// A class that saves the songs in the album in order and allows a user to add and remove songs from that album
-public class Album {
-    private String title;
-    private String artist;
-    private String albumTitle;
+public class Song {
+    private final String songName;
+    private final String artist;
+    private final String albumTitle;
     private int rating;
     private boolean isFavorite;
 
-    // Add constructors, getters, setters, and other methods as needed
+    public Song(String songName, String artist, String albumTitle) {
+        this.songName = songName;
+        this.artist = artist;
+        this.albumTitle = albumTitle;
+    }
+
+    public String getSongName() {
+        return this.songName;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getAlbumTitle() {
+        return albumTitle;
+    }
+
+
+    public int getRating() {
+        return rating;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setRating(int rating) {
+        if (rating >= 1 && rating <= 5) {
+            this.rating = rating;
+        }
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.isFavorite = favorite;
+    }
+
+    public Song copy() {
+        return new Song(this.songName, this.artist, this.albumTitle);
+    }
+
 }
