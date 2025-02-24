@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        parser test_parser = new parser();
+        Parser test_parser = new Parser();
         test_parser.loadFile("test.txt");
         test_parser.parseFiles();
-        System.out.println("Printed File");
-        test_parser.showData();
+        DataConverter converter = new DataConverter(test_parser);
+        converter.convertData();
     }
 }
