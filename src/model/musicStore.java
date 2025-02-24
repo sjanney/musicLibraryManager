@@ -33,6 +33,7 @@ public class musicStore {
         // We create our "stock" of music application
         this.album_stock = new ArrayList<>();
         this.song_stock = new ArrayList<>();
+        System.out.print("");
     }
 
     public ArrayList<Album> getAlbums() {
