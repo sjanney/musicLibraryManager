@@ -64,4 +64,15 @@ public class parserTests {
         assertFalse(test_parser.parserStatus());
     }
 
+    @Test
+    public void loadMultipleFiles() throws FileNotFoundException {
+        parser test_parser = new parser();
+        assertFalse(test_parser.parserStatus());
+        test_parser.loadFile("test.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
+        test_parser.loadFile("albums/21_Adele.txt");
+        test_parser.parseFiles();
+        test_parser.showData();
+    }
+
 }
