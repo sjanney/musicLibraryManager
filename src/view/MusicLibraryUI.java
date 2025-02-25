@@ -1,17 +1,12 @@
-/*
- * File: MusticLibraryUI.java
- *
- *
- */
+
 
 // Necessary Packages and Libraries
 package view;
-import model.*;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+
 
 
 public class MusicLibraryUI {
@@ -26,35 +21,21 @@ public class MusicLibraryUI {
     private static final String BLUE = "\u001B[34m";
     private static final String PURPLE = "\u001B[35m";
     private static final String CYAN = "\u001B[36m";
-    private musicStore main_store = new musicStore();
 
 
-    public void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         // Main instance that is running when user enter's program
-
-        // We first initialize our store and library
-        this.main_store.loadInventory();
         while (true) {
-            // We show the user the main menu along with the possible options
             displayMainMenu();
-            // We collect the user main choices
             int choice = getUserChoice();
-            // We then complete the given operation
             handleMainMenuChoice(choice);
         }
     }
 
-
     private static void displayMainMenu() {
-        // NOTE* Guidance taken from AI to create this method
-
-        // This method shows all the possible options that we can do within the applicaiton
-
-        // We clear all the current termial text ("may remove later")
         clearScreen();
         printTitle("Music Library System");
 
-        // Create the headers for displaying information
         String[] headers = {"Option", "Description"};
         String[][] data = {
                 {"1", "Search Music Store"},
@@ -63,13 +44,11 @@ public class MusicLibraryUI {
                 {"4", "View Library"},
                 {"5", "Exit"}
         };
-        // Printing all the given tables
+
         printTable(headers, data);
     }
 
     private static void displaySearchMenu() {
-        // Similar to dispalyMenu, yet instead with different headers
-
         clearScreen();
         printTitle("Search Music Store");
 
@@ -86,9 +65,6 @@ public class MusicLibraryUI {
     }
 
     private static void displayLibrary() {
-        /*
-         * NEED TO IMPLEMENT USER LIBRARY CLASS AND METHDOS
-         */
         clearScreen();
         printTitle("Your Library");
 
@@ -108,11 +84,10 @@ public class MusicLibraryUI {
         clearScreen();
         printTitle("Search Results for: " + searchTerm);
 
-
         // Example search results
-        String[] headers = {"Title", "Artist", "Album", "Rating", "Favorite"};
+        String[] headers = {"Title", "Artist", "Album", "Duration"};
         String[][] data = {
-                  {"Bohemian Rhapsody", "Queen", "A Night at the Opera", "5:55"},
+                {"Bohemian Rhapsody", "Queen", "A Night at the Opera", "5:55"},
                 {"Radio Ga Ga", "Queen", "The Works", "5:48"}
         };
 
@@ -224,19 +199,7 @@ public class MusicLibraryUI {
                 System.out.print(YELLOW + "Enter search term: " + RESET);
                 scanner.nextLine(); // Consume newline
                 String searchTerm = scanner.nextLine();
-                // Show the possible options
-                if (choice == 1) {
-                    searchSongs(searchTerm, "songTitle"); // Example search
-                }
-                else if (choice == 2) {
-                    searchSongs(searchTerm, "songArtist"); // Example search
-                }
-                else if (choice == 3) {
-                    searchSongs(searchTerm, "alubmTitle");
-                }
-                else {
-                    searchSongs(searchTerm, "alubmArtist");
-                }
+                searchSongs(searchTerm, "title"); // Example search
             } else {
                 System.out.println(RED + "Invalid choice. Please try again." + RESET);
                 promptEnterToContinue();
