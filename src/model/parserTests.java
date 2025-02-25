@@ -26,28 +26,28 @@ public class parserTests {
         // Testing if files are correctly loaded into the Parser
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
-        test_parser.loadFile("test1.txt");
-        test_parser.loadFile("test2.txt");
-        test_parser.loadFile("test3.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
         // Check if files are within Parser
         ArrayList<String> check1 = new ArrayList<String>();
-        check1.add("test1.txt");
-        check1.add("test2.txt");
-        check1.add("test3.txt");
+        check1.add("albums/19_Adele.txt");
+        check1.add("albums/19_Adele.txt");
+        check1.add("albums/19_Adele.txt");
         // Checking removal of files
         assertEquals(test_parser.getFiles(), check1);
-        test_parser.removeFile("test1.txt");
+        test_parser.removeFile("albums/19_Adele.txt");
         assertNotEquals(test_parser.getFiles(),check1);
-        test_parser.removeFile("test2.txt");
-        check1.remove("test2.txt");
-        check1.remove("test1.txt");
+        test_parser.removeFile("albums/19_Adele.txt");
+        check1.remove("albums/19_Adele.txt");
+        check1.remove("albums/19_Adele.txt");
         assertEquals(test_parser.getFiles(), check1);
     }
     @Test
     public void testParserFileReading() throws FileNotFoundException {
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus()); // Parser not ran yet, should be false
-        test_parser.loadFile("test.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
         test_parser.parseFiles();
         assertTrue(test_parser.parserStatus());
         test_parser.parseFiles(); // Should not run, since all files have already been ran
@@ -58,7 +58,7 @@ public class parserTests {
     public void testParserReset() throws FileNotFoundException {
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
-        test_parser.loadFile("test.txt");
+        test_parser.loadFile("albums/19_Adele.txt");
         test_parser.parseFiles();
         test_parser.resetParser();
         assertFalse(test_parser.parserStatus());
@@ -66,9 +66,8 @@ public class parserTests {
 
     @Test
     public void loadMultipleFiles() throws FileNotFoundException {
-        parser test_parser = new parser();
+        Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
-        test_parser.loadFile("test.txt");
         test_parser.loadFile("albums/19_Adele.txt");
         test_parser.loadFile("albums/21_Adele.txt");
         test_parser.parseFiles();

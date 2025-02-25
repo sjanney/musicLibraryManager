@@ -16,6 +16,10 @@ public class Playlist {
     }
 
     public ArrayList<Song> getSongs() {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : this.songs) {
+            songs.add(song.copy());
+        }
         return songs;
     }
 
