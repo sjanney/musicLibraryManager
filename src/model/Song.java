@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Objects;
-
 public class Song {
     private String songName;
     private String artist;
@@ -10,7 +8,7 @@ public class Song {
     private boolean isFavorite;
     private int trackPosition;
 
-    public Song(String songName, String artist, String albumTitle, int trackPosition) {
+    public Song() {
         this.songName = songName;
         this.artist = artist;
         this.albumTitle = albumTitle;
@@ -20,11 +18,12 @@ public class Song {
     }
 
     public Song(String songName, String artist, String albumTitle) {
-        this(songName, artist, albumTitle, 0);
+        this.rating = 0;
+        this.isFavorite = false;
     }
 
     public String getSongName() {
-        return songName;
+        return this.songName;
     }
 
     public String getArtist() {

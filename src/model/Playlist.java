@@ -2,9 +2,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Playlist {
-    private String playlistName;
+    private final String playlistName;
     private ArrayList<Song> songs;
     private int currentSongIndex;
 
@@ -31,5 +32,18 @@ public class Playlist {
         if (!songs.isEmpty()) {
             currentSongIndex = (currentSongIndex + 1) % songs.size();
         }
+    }
+
+    public String getPlaylistName() {
+        // returns the name of the playlist
+        return playlistName;
+    }
+
+    public Collection<Object> getSongs() {
+        // returns the list of all songs in teh playlist
+    }
+
+    public int getCurrentSongIndex() {
+        // returns where the song is in the playlist similar to the way it works in the album class
     }
 }
