@@ -23,5 +23,13 @@ public class Playlist {
         return playlistName;
     }
 
+    public Playlist copy() {
+        Playlist playlist = new Playlist(this.playlistName);
+        for (Song song : this.songs) {
+            playlist.addSong(song.copy());
+        }
+        return playlist;
+    }
+
 
 }
