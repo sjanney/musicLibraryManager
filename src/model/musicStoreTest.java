@@ -1,5 +1,4 @@
 package model;
-
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -41,13 +40,12 @@ public class musicStoreTest {
         musicStore m = new musicStore();
         m.loadInventory();
         ArrayList<Song> test_songs = m.searchSong(true,false,"Adele",null);
-        System.out.println(test_songs.size());
+        assertNotNull(test_songs);
         for (Song test_song : test_songs) {
             System.out.println(test_song.getSongName());
         }
         assertNotNull(test_songs);
     }
-
 
 
 }

@@ -159,4 +159,5 @@ public class musicStore {
         songStock.remove(album);
     }
 
+    String artist = "hello";
     }
