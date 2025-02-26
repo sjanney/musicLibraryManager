@@ -1,6 +1,19 @@
 package model;
-
 import java.util.ArrayList;
+/*
+ * class Playlist(): This class creates a playlist object that is stored within the user's library
+ *
+ * Attributes:
+ *      - ArrayList<Song> songs: This is a list of songs that are contained within the playlist
+ *      - String playlistName: This is the name of the current playlist
+ *
+ * Methods:
+ *      - addSong(Song song): Adds song to the playlist
+ *      - getSongs(): Sends out a copy of all the songs within the playlist
+ *      - getPlaylistName(): Returns the name of the playlist
+ *      - copy(): This creates a deep copy of the playlist object
+ *      - removeSong(): This removes a current song from the playlist
+ */
 
 public class Playlist {
     private ArrayList<Song> songs;
@@ -35,5 +48,8 @@ public class Playlist {
         return playlist;
     }
 
+    public void removeSong(Song song) {
+        this.songs.remove(song);
+    }
 
 }
