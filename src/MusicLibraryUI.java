@@ -1,9 +1,7 @@
 
-
+/*
 // Necessary Packages and Libraries
 package view;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -93,17 +91,7 @@ public class MusicLibraryUI {
         promptEnterToContinue();
     }
 
-    private static void printTable(String[] headers, String[][] data) {
-        // Calculate column widths
-        int[] columnWidths = new int[headers.length];
-        for (int i = 0; i < headers.length; i++) {
-            columnWidths[i] = headers[i].length();
-            for (String[] row : data) {
-                if (row[i].length() > columnWidths[i]) {
-                    columnWidths[i] = row[i].length();
-                }
-            }
-        }
+
 
         // Print header
         printTableLine(columnWidths);
@@ -205,3 +193,5 @@ public class MusicLibraryUI {
         }
     }
 }
+
+ */
