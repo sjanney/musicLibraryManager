@@ -53,11 +53,6 @@ public class musicStore {
         File database = new File("albums/");
         File[] data_files = database.listFiles();
 
-        // Check if the directory exists and contains files
-        if (data_files == null) {
-            System.err.println("The directory 'albums/' does not exist or is empty.");
-            return;
-        }
 
         // We create our parser object and load our files
         Parser p = new Parser();

@@ -55,6 +55,24 @@ public class userLibrary {
         return new_playlists;
     }
 
+    public Song searchSongByTitle(String title) {
+        for (Song song : user_songs) {
+            if (title.equals(song.getSongName())) {
+                return song.copy();
+            }
+        }
+        return null;
+    }
+
+    public Song searchSongByArtist(String artist) {
+        for (Song song : user_songs) {
+            if (artist.equals(song.getArtist())) {
+                return song.copy();
+            }
+        }
+        return null;
+    }
+
     public void addAlbum(Album album) {
         user_albums.add(album);
     }
