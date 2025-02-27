@@ -55,6 +55,7 @@ public class mainUI {
     }
 
     private static void printTitle(String title) {
+        // Prints the title with necessary colors (*created with AI)
         System.out.println(PURPLE + "\n=== " + title + " ===" + RESET + "\n");
     }
 
@@ -76,6 +77,8 @@ public class mainUI {
     }
 
     private void printTable(String[] headers, String[][] data) {
+        // Functions that prints out all the data in necessary tables in nice format (*created with AI)
+
         // Calculate column widths
         int[] columnWidths = new int[headers.length];
         for (int i = 0; i < headers.length; i++) {
@@ -114,6 +117,7 @@ public class mainUI {
     }
 
     private void printTableLine(int[] columnWidths) {
+        // (*created with AI)
         System.out.print("+");
         for (int width : columnWidths) {
             System.out.print("-".repeat(width) + "+");
@@ -138,11 +142,13 @@ public class mainUI {
     private void handleMainMenuChoice(int choice) {
         switch (choice) {
             case 1:
-                System.out.println(YELLOW + "Music Store - Coming Soon!" + RESET);
+                musicStoreInterface();
+                //System.out.println(YELLOW + "Music Store - Coming Soon!" + RESET);
                 promptEnterToContinue();
                 break;
             case 2:
-                System.out.println(YELLOW + "User Library - Coming Soon!" + RESET);
+                userLibraryInterface();
+                //System.out.println(YELLOW + "User Library - Coming Soon!" + RESET);
                 promptEnterToContinue();
                 break;
             case 3:
@@ -164,6 +170,112 @@ public class mainUI {
             default:
                 System.out.println(RED + "Invalid choice. Please try again." + RESET);
                 promptEnterToContinue();
+        }
+    }
+
+    private void displayMusicStoreOptions() {
+        clearScreen();
+        printTitle("Music Store");
+
+        String[] headers = {"Option", "Description"};
+        String[][] data = {
+                {"1", "Search for a Song"},
+                {"2", "Search for a Album"},
+                {"3", "Buy Song to Library"},
+                {"4", "Buy Album to Library"},
+                {"5", "Exit"}
+        };
+        printTable(headers, data);
+        handleMusicStoreOptions();
+    }
+
+    private void handleMusicStoreOptions() {
+        // This code with handle whatever the user enters
+    }
+
+    public void musicStoreInterface() {
+        boolean storeMode = true;
+
+        while (storeMode) {
+            displayMusicStoreOptions();
+            int choice = getUserChoice();
+
+            switch (choice) {
+                case 1:
+                    System.out.println(YELLOW + "Search for a Song - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 2:
+                    System.out.println(YELLOW + "Search for an Album - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 3:
+                    System.out.println(YELLOW + "Buy Song to Library - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 4:
+                    System.out.println(YELLOW + "Buy Album to Library - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 5:
+                    System.out.println(BLUE + "Returning to main menu..." + RESET);
+                    storeMode = false;
+                    break;
+                default:
+                    System.out.println(RED + "Invalid choice. Please try again." + RESET);
+                    promptEnterToContinue();
+            }
+        }
+    }
+
+    private void displayUserLibraryOptions() {
+        clearScreen();
+        printTitle("Music Library");
+
+        String[] headers = {"Option", "Description"};
+        String[][] data = {
+                {"1", "Search for a Song"},
+                {"2", "Search for a Album"},
+                {"3", "Create a new Playlist"},
+                {"4", "View Songs"},
+                {"5", "Exit"}
+        };
+        printTable(headers, data);
+        handleMusicStoreOptions();
+    }
+
+    public void userLibraryInterface() {
+        boolean libraryMode = true;
+
+        while (libraryMode) {
+            displayUserLibraryOptions();
+            int choice = getUserChoice();
+
+            switch (choice) {
+                case 1:
+                    System.out.println(YELLOW + "Search for a Song - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 2:
+                    System.out.println(YELLOW + "Search for a Album - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 3:
+                    System.out.println(YELLOW + "Create a new Playlist - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 4:
+                    System.out.println(YELLOW + "View Songs - Coming Soon!" + RESET);
+                    promptEnterToContinue();
+                    break;
+                case 5:
+                    System.out.println(BLUE + "Returning to main menu..." + RESET);
+                    libraryMode = false;
+                    break;
+                default:
+                    System.out.println(RED + "Invalid choice. Please try again." + RESET);
+                    promptEnterToContinue();
+            }
         }
     }
 }
