@@ -76,7 +76,6 @@ public class mainUI {
                 {"5", "Set Favorites"},
                 {"6", "Exit"}
         };
-
         printTable(headers, data);
     }
 
@@ -130,10 +129,12 @@ public class mainUI {
     }
 
     private String padRight(String s, int n) {
+        // (*created with AI)
         return String.format("%-" + n + "s", s);
     }
 
     private static void clearScreen() {
+        // (*Created with AI)
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -184,11 +185,11 @@ public class mainUI {
         printTable(headers, options);
         int choice = getUserChoice();
         switch (choice) {
-            case 1: // Rating a song
+            case 1: // favoriting a song
                 System.out.println("Enter the Title of the song: ");
                 String title = scanner.nextLine();
                 ArrayList<Song> songs = user.searchSongByTitle(title);
-                // Rate the Song
+                // favorite the Song
                 Song currentSong = songs.get(0);
                 currentSong.setFavorite(true);
         }
@@ -329,6 +330,7 @@ public class mainUI {
                 resultData[i][4] = currentSong.ratingToString();
             }
             printTable(resultHeaders, resultData);
+
         }
     }
 
@@ -391,6 +393,12 @@ public class mainUI {
                 resultData[i][3] = curr_album.ratingToString();
             }
             printTable(resultHeaders, resultData);
+            System.out.println(YELLOW + "Which Album would you want to view?: " + RESET);
+            int choice2 = getUserChoice();
+            Album currentAlbum = searchResults.get(choice2-1);
+            for (int i = 0; i < currentAlbum.getTracks().size(); i++) {
+                System.out.println(currentAlbum.getTracks().get(i).getSongName());
+            }
         } else {
             // User Library
 
@@ -450,6 +458,12 @@ public class mainUI {
                 resultData[i][3] = current_album.ratingToString();
             }
             printTable(resultHeaders, resultData);
+            System.out.println(YELLOW + "Which Album would you want to view?: " + RESET);
+            int choice2 = getUserChoice();
+            Album currentAlbum = searchResults.get(choice2-1);
+            for (int i = 0; i < currentAlbum.getTracks().size(); i++) {
+                System.out.println(currentAlbum.getTracks().get(i).getSongName());
+            }
         }
     }
 
@@ -634,6 +648,12 @@ public class mainUI {
             resultData[i][1] = Integer.toString(user_playlists.get(i).getSongs().size());
         }
         printTable(resultHeaders, resultData);
+        System.out.println(YELLOW + "Which Playlist would you want to view?: " + RESET);
+        int choice2 = getUserChoice();
+        Playlist playlist = user_playlists.get(choice2-1);
+        for (int i = 0; i < playlist.getSongs().size(); i++) {
+            System.out.println(playlist.getSongs().get(i).getSongName());
+        }
     }
 
     public void setRating() {

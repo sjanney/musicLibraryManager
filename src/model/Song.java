@@ -95,10 +95,10 @@ public class Song {
     }
 
     public void setFavorite(boolean favorite) {
-        if (favorite) {
-            this.isFavorite = Favorite.Favorited;
+        if (favorite == false) {
+            this.isFavorite = Favorite.Unfavorited;
         }
-        this.isFavorite = Favorite.Unfavorited;
+        this.isFavorite = Favorite.Favorited;
     }
 
     public Song copy() {
