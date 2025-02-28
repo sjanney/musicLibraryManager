@@ -539,7 +539,7 @@ public class mainUI {
             }
             // Remove song
             store.sellAlbum(main_album);
-            System.out.println(GREEN + "SONG " + main_album.getTitle() + " has been added to your library." + RESET);
+            System.out.println(GREEN + "ALBUM " + main_album.getTitle() + " has been added to your library." + RESET);
             user.addAlbum(main_album);
         }
     }
