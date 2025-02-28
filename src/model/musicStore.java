@@ -53,11 +53,6 @@ public class musicStore {
         File database = new File("albums/");
         File[] data_files = database.listFiles();
 
-        // Check if the directory exists and contains files
-        if (data_files == null) {
-            System.err.println("The directory 'albums/' does not exist or is empty.");
-            return;
-        }
 
         // We create our parser object and load our files
         Parser p = new Parser();
@@ -85,7 +80,7 @@ public class musicStore {
         for (int i = 0; i < this.album_stock.size(); i++) {
             ArrayList<Song> current_songs = this.album_stock.get(i).getTracks();
             for (int j = 0; j < current_songs.size(); j++) {
-                this.song_stock.add(current_songs.get(j));
+                this.song_stock.add(current_songs.get(j).copy());
             }
         }
 
@@ -116,12 +111,13 @@ public class musicStore {
         return null;
     }
 
-    public Album searchAlbum(boolean byArtist,boolean byTitle, String artist, String albumTitle) {
+    public ArrayList<Album> searchAlbum(boolean byArtist,boolean byTitle, String artist, String albumTitle) {
+        ArrayList<Album> search_result= new ArrayList<>();
         if (byArtist) {
             for (int i = 0; i < this.album_stock.size(); i++) {
                 String curr_artist = this.album_stock.get(i).getArtist();
                 if (curr_artist.equals(artist)) {
-                    return this.album_stock.get(i).copy();
+                    search_result.add(album_stock.get(i).copy());
                 }
             }
         }
@@ -129,35 +125,41 @@ public class musicStore {
         else if (byTitle) {
             for (int i = 0; i < this.album_stock.size(); i++) {
                 if (this.album_stock.get(i).getTitle().equals(albumTitle)) {
-                    return this.album_stock.get(i).copy();
+                    search_result.add(this.album_stock.get(i).copy());
                 }
             }
         }
-        return null;
+        return search_result;
     }
 
     public int albumInventory() {
         return this.album_stock.size();
     }
 
-    public Song searchSongByTitle(String title) {
+    public ArrayList<Song> searchSongByTitle(String title) {
+        ArrayList<Song> search_results = new ArrayList<>();
         for (int i = 0; i < this.song_stock.size(); i++) {
             if (this.song_stock.get(i).getSongName().equals(title)) {
-                return this.song_stock.get(i).copy();
+                search_results.add( this.song_stock.get(i).copy());
             }
         }
-        return null;
+        return search_results;
     }
 
     public void sellSong(Song song) {
-        ArrayList<Song> songStock = this.song_stock;
-        songStock.remove(song);
+        for (int i = 0; i < this.song_stock.size(); i++) {
+            if (this.song_stock.get(i).getSongName().equals(song.getSongName()) && this.song_stock.get(i).getArtist().equals(song.getArtist())) {
+                this.song_stock.remove(i);
+            }
+        }
     }
 
     public void sellAlbum(Album album) {
-        ArrayList<Song> songStock = this.song_stock;
-        songStock.remove(album);
+        for (int i = 0; i < this.album_stock.size(); i++) {
+            if (this.album_stock.get(i).getTitle().equals(album.getTitle()) && this.album_stock.get(i).getArtist().equals(album.getArtist())) {
+                this.album_stock.remove(i);
+            }
+        }
     }
 
-    String artist = "hello";
-    }
+}

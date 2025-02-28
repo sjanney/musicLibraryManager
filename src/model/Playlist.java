@@ -48,6 +48,10 @@ public class Playlist {
         return playlist;
     }
 
+    public String getTitle() {
+        return this.playlistName;
+    }
+
     public void removeSong(Song song) {
         this.songs.remove(song);
     }

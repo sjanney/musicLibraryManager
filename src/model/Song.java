@@ -83,8 +83,22 @@ public class Song {
         }
     }
 
+    public String ratingToString() {
+        return this.rating.toString();
+    }
+
+    public String favoriteToString() {
+        if (this.isFavorite == Favorite.Favorited) {
+            return "favorite";
+        }
+        return "unfavorite";
+    }
+
     public void setFavorite(boolean favorite) {
-        this.isFavorite = Favorite.Favorited;
+        if (favorite) {
+            this.isFavorite = Favorite.Favorited;
+        }
+        this.isFavorite = Favorite.Unfavorited;
     }
 
     public Song copy() {

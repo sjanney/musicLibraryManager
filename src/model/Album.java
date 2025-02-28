@@ -30,7 +30,6 @@ public class Album {
      */
 
     // Created instance variables
-    private String title;
     private String artist;
     private String albumTitle;
     private Rating rating;
@@ -42,11 +41,12 @@ public class Album {
 
     public Album(String title, String artist,int year) {
         // We create our Album with these attributes
-        this.title = title;
+        this.albumTitle = title;
         this.artist = artist;
         this.year = year;
         this.track_list = new ArrayList<Song>();
         this.isFavorite = Favorite.Unfavorited;
+        this.rating = Rating.None;
 
     }
 
@@ -86,7 +86,7 @@ public class Album {
     }
 
     public String getTitle() {
-        return title;
+        return albumTitle;
     }
 
     public String getArtist() {
@@ -95,7 +95,7 @@ public class Album {
 
     public Album copy() {
         // We first create a new object
-        Album copy_album = new Album(this.title, this.artist, this.year);
+        Album copy_album = new Album(this.albumTitle, this.artist, this.year);
 
         // We then add the rest of the fields
         copy_album.albumTitle = this.albumTitle;
@@ -105,6 +105,17 @@ public class Album {
             copy_album.addTracks(this.raw_data);
         }
         return copy_album;
+    }
+
+    public String ratingToString() {
+        return this.rating.toString();
+    }
+
+    public String favoriteToString() {
+        if (this.isFavorite == Favorite.Favorited) {
+            return "favorite";
+        }
+        return "unfavorite";
     }
 
 }

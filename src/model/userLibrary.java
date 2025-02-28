@@ -55,9 +55,55 @@ public class userLibrary {
         return new_playlists;
     }
 
+    public ArrayList<Song> searchSongByTitle(String title) {
+        ArrayList<Song> searchResults = new ArrayList<>();
+        for (Song song : user_songs) {
+            if (title.equals(song.getSongName())) {
+                searchResults.add(song);
+            }
+        }
+        return searchResults;
+    }
+
+    public ArrayList<Song> searchSongByArtist(String artist) {
+        ArrayList<Song> searchResults = new ArrayList<>();
+        for (Song song : user_songs) {
+            if (artist.equals(song.getArtist())) {
+                searchResults.add(song.copy());
+            }
+        }
+        return searchResults;
+    }
+
+    public ArrayList<Album> searchAlbumByTitle(String title) {
+        ArrayList<Album> searchResults = new ArrayList<>();
+        for (Album album : user_albums) {
+            if (title.equals(album.getTitle())) {
+                searchResults.add(album.copy());
+            }
+        }
+        return searchResults;
+    }
+
+    public ArrayList<Song> getUnprotectedSongs() {
+        // Special Method that sends reference to list, only used in special circumstances
+        return this.user_songs;
+    }
+
+    public ArrayList<Album> searchAlbumByArtist(String artist) {
+        ArrayList<Album> searchResults = new ArrayList<>();
+        for (Album album : user_albums) {
+            if (artist.equals(album.getArtist())) {
+                searchResults.add(album.copy());
+            }
+        }
+        return searchResults;
+    }
+
     public void addAlbum(Album album) {
         user_albums.add(album);
     }
+
 
     public void addSong(Song song) {
         user_songs.add(song);
@@ -66,5 +112,6 @@ public class userLibrary {
     public void addPlaylist(Playlist playlist) {
         user_playlists.add(playlist);
     }
+
 
 }
