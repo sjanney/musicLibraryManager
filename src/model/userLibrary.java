@@ -85,6 +85,11 @@ public class userLibrary {
         return searchResults;
     }
 
+    public ArrayList<Song> getUnprotectedSongs() {
+        // Special Method that sends reference to list, only used in special circumstances
+        return this.user_songs;
+    }
+
     public ArrayList<Album> searchAlbumByArtist(String artist) {
         ArrayList<Album> searchResults = new ArrayList<>();
         for (Album album : user_albums) {
@@ -99,6 +104,7 @@ public class userLibrary {
         user_albums.add(album);
     }
 
+
     public void addSong(Song song) {
         user_songs.add(song);
     }
@@ -106,5 +112,6 @@ public class userLibrary {
     public void addPlaylist(Playlist playlist) {
         user_playlists.add(playlist);
     }
+
 
 }

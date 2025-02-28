@@ -158,11 +158,11 @@ public class mainUI {
                 promptEnterToContinue();
                 break;
             case 4:
-                System.out.println(YELLOW + "Set Rating - Coming Soon!" + RESET);
+                setRating();
                 promptEnterToContinue();
                 break;
             case 5:
-                System.out.println(YELLOW + "Set Favorites - Coming Soon!" + RESET);
+                setFavorite();
                 promptEnterToContinue();
                 break;
             case 6:
@@ -175,6 +175,24 @@ public class mainUI {
         }
     }
 
+    public void setFavorite() {
+        String[] headers = {"Option", "Description"};
+        String[][] options = {
+                {"1", "Set a Favorite for a Song"},
+                {"2", "Set a Favorite for a Album"}
+        };
+        printTable(headers, options);
+        int choice = getUserChoice();
+        switch (choice) {
+            case 1: // Rating a song
+                System.out.println("Enter the Title of the song: ");
+                String title = scanner.nextLine();
+                ArrayList<Song> songs = user.searchSongByTitle(title);
+                // Rate the Song
+                Song currentSong = songs.get(0);
+                currentSong.setFavorite(true);
+        }
+    }
     private void displayMusicStoreOptions() {
         clearScreen();
         printTitle("Music Store");
@@ -565,7 +583,7 @@ public class mainUI {
     }
 
     public void printSongs() {
-        ArrayList<Song> songs = user.getUserSongs();
+        ArrayList<Song> songs = user.getUnprotectedSongs();
         String[] resultHeaders = {"Title", "Artist", "Album", "Favorite?", "Rating"};
         String[][] resultData = new String[songs.size()][5];
 
@@ -598,7 +616,7 @@ public class mainUI {
             else {
                 ArrayList<Song> searchResults = user.searchSongByTitle(choice);
                 for (int i = 0; i < searchResults.size(); i++) {
-                    new_playlist.addSong(searchResults.get(i));
+                    new_playlist.addSong(searchResults.get(i).copy());
                 }
             }
         }
@@ -626,6 +644,17 @@ public class mainUI {
         };
         printTable(headers, options);
         int choice = getUserChoice();
+        switch (choice) {
+            case 1: // Rating a song
+                System.out.println("Enter the Title of the song: ");
+                String title = scanner.nextLine();
+                ArrayList<Song> songs = user.searchSongByTitle(title);
+                // Rate the Song
+                Song currentSong = songs.get(0);
+                System.out.println("What do you want to rate the song?:(1 - 5) ");
+                int choice2 = getUserChoice();
+                currentSong.setRating(choice2);
+        }
 
     }
 
