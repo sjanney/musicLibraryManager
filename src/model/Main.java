@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Parser test_parser = new Parser();
-        test_parser.loadFile("test.txt");
+        test_parser.loadFile("albums/19_adele");
         test_parser.parseFiles();
         DataConverter converter = new DataConverter(test_parser);
         converter.convertData();

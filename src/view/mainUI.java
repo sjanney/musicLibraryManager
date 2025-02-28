@@ -1,5 +1,7 @@
 package view;
 import model.*;
+
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.Scanner;
 /*
@@ -34,8 +36,10 @@ public class mainUI {
         this.scanner = new Scanner(System.in);
     }
 
-    public void startInstance() {
+    public void startInstance() throws FileNotFoundException {
         // This methods create's the instance of the UI, allowing it to be ran until terminated
+        this.store.loadInventory();
+
         while (true) {
             displayMainMenu();
             int choice = getUserChoice();
@@ -186,11 +190,329 @@ public class mainUI {
                 {"5", "Exit"}
         };
         printTable(headers, data);
-        handleMusicStoreOptions();
+        //handleMusicStoreOptions();
+
+
     }
 
-    private void handleMusicStoreOptions() {
-        // This code with handle whatever the user enters
+    private void searchSong(String type) {
+        clearScreen();
+
+        if (type.equals("Music Store")) {
+            // Display the search options table.
+            String[] headers = {"Option", "Description"};
+            String[][] options = {
+                    {"1", "Search By Title"},
+                    {"2", "Search By Artist"}
+            };
+            printTable(headers, options);
+
+            int choice = getUserChoice();
+            String searchTerm = "";
+            ArrayList<Song> searchResults = new ArrayList<>();
+
+            switch (choice) {
+                case 1:
+                    // Search by Title
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Song Title: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = store.searchSongByTitle(searchTerm);
+                    break;
+
+                case 2:
+                    // Search by Artist
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Artist Name: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = store.searchSong(true, false,searchTerm, "");
+                    break;
+
+                default:
+                    System.out.println("Invalid option selected.");
+                    return;
+            }
+
+            // Check if search returned any results.
+            if (searchResults.isEmpty()) {
+                System.out.println("No songs found for: " + searchTerm);
+                return;
+            }
+
+            // Prepare table data for displaying search results.
+            String[] resultHeaders = {"Title", "Artist", "Album", "Favorite?", "Rating"};
+            String[][] resultData = new String[searchResults.size()][5];
+
+            for (int i = 0; i < searchResults.size(); i++) {
+                Song currentSong = searchResults.get(i);
+                resultData[i][0] = currentSong.getSongName();
+                resultData[i][1] = currentSong.getArtist();
+                // Assuming a getAlbum() method exists; if not, adjust as needed.
+                resultData[i][2] = currentSong.getAlbumTitle();
+                resultData[i][3] = currentSong.favoriteToString();
+                resultData[i][4] = currentSong.ratingToString();
+            }
+            printTable(resultHeaders, resultData);
+        } else {
+            // This is for the user library
+
+            // Display the search options table.
+            String[] headers = {"Option", "Description"};
+            String[][] options = {
+                    {"1", "Search By Title"},
+                    {"2", "Search By Artist"}
+            };
+            printTable(headers, options);
+
+            int choice = getUserChoice();
+            String searchTerm = "";
+            ArrayList<Song> searchResults = new ArrayList<>();
+
+            switch (choice) {
+                case 1:
+                    // Search by Title
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Song Title: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = user.searchSongByTitle(searchTerm);
+                    break;
+
+                case 2:
+                    // Search by Artist
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Artist Name: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = user.searchSongByArtist(searchTerm);
+                    break;
+
+                default:
+                    System.out.println("Invalid option selected.");
+                    return;
+            }
+
+            // Check if search returned any results.
+            if (searchResults.isEmpty()) {
+                System.out.println("No songs found for: " + searchTerm);
+                return;
+            }
+
+            // Prepare table data for displaying search results.
+            String[] resultHeaders = {"Title", "Artist", "Album", "Favorite?", "Rating"};
+            String[][] resultData = new String[searchResults.size()][5];
+
+            for (int i = 0; i < searchResults.size(); i++) {
+                Song currentSong = searchResults.get(i);
+                resultData[i][0] = currentSong.getSongName();
+                resultData[i][1] = currentSong.getArtist();
+                // Assuming a getAlbum() method exists; if not, adjust as needed.
+                resultData[i][2] = currentSong.getAlbumTitle();
+                resultData[i][3] = currentSong.favoriteToString();
+                resultData[i][4] = currentSong.ratingToString();
+            }
+            printTable(resultHeaders, resultData);
+        }
+    }
+
+    private void searchAlbum(String type) {
+        clearScreen();
+
+        if (type.equals("Music Store")) {
+            // Display the search options table.
+            String[] headers = {"Option", "Description"};
+            String[][] options = {
+                    {"1", "Search By Title"},
+                    {"2", "Search By Artist"}
+            };
+            printTable(headers, options);
+
+            int choice = getUserChoice();
+            String searchTerm = "";
+            ArrayList<Album> searchResults = new ArrayList<>();
+
+            switch (choice) {
+                case 1:
+                    // Search by Title
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Song Title: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = store.searchAlbum(false,true,"",searchTerm);
+                    break;
+
+                case 2:
+                    // Search by Artist
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Artist Name: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = store.searchAlbum(true,false,searchTerm,"");
+                    break;
+
+                default:
+                    System.out.println("Invalid option selected.");
+                    return;
+            }
+
+            // Check if search returned any results.
+            if (searchResults.isEmpty()) {
+                System.out.println("No Albums found for: " + searchTerm);
+                return;
+            }
+
+            // Prepare table data for displaying search results.
+            String[] resultHeaders = {"Title", "Artist", "Favorite?", "Rating"};
+            String[][] resultData = new String[searchResults.size()][4];
+
+            for (int i = 0; i < searchResults.size(); i++) {
+                Album curr_album = searchResults.get(i);
+                resultData[i][0] = curr_album.getTitle();
+                resultData[i][1] = curr_album.getArtist();
+                // Assuming a getAlbum() method exists; if not, adjust as needed.
+                resultData[i][2] = curr_album.favoriteToString();
+                resultData[i][3] = curr_album.ratingToString();
+            }
+            printTable(resultHeaders, resultData);
+        } else {
+            // User Library
+
+            /// This is for the user library
+
+            // Display the search options table.
+            String[] headers = {"Option", "Description"};
+            String[][] options = {
+                    {"1", "Search By Title"},
+                    {"2", "Search By Artist"}
+            };
+            printTable(headers, options);
+
+            int choice = getUserChoice();
+            String searchTerm = "";
+            ArrayList<Album> searchResults = new ArrayList<>();
+
+            switch (choice) {
+                case 1:
+                    // Search by Title
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Song Title: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = user.searchAlbumByTitle(searchTerm);
+                    break;
+
+                case 2:
+                    // Search by Artist
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Artist Name: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = user.searchAlbumByArtist(searchTerm);
+                    break;
+
+                default:
+                    System.out.println("Invalid option selected.");
+                    return;
+            }
+
+            // Check if search returned any results.
+            if (searchResults.isEmpty()) {
+                System.out.println("No songs found for: " + searchTerm);
+                return;
+            }
+
+            // Prepare table data for displaying search results.
+            String[] resultHeaders = {"Title", "Artist", "Favorite?", "Rating"};
+            String[][] resultData = new String[searchResults.size()][4];
+
+            for (int i = 0; i < searchResults.size(); i++) {
+                Album current_album = searchResults.get(i);
+                resultData[i][0] = current_album.getTitle();
+                resultData[i][1] = current_album.getArtist();
+                resultData[i][2] = current_album.favoriteToString();
+                resultData[i][3] = current_album.ratingToString();
+            }
+            printTable(resultHeaders, resultData);
+        }
+    }
+
+    public void sellItem(String type) {
+        clearScreen();
+        if (type.equals("song")) {
+            Song main_song;
+            ArrayList<Song> songs = new ArrayList<>();
+            while (songs.size() <= 0) {
+                System.out.println("Enter Song Title: " + RESET);
+                String title = scanner.nextLine();
+                songs = store.searchSongByTitle(title);
+            }
+            if (songs.size() > 1) {
+                System.out.println(RED + "You have more than one song found." + RESET);
+                System.out.println("");
+                String[] resultHeaders = {"#","Title", "Artist", "Album", "Favorite?", "Rating"};
+                String[][] resultData = new String[songs.size()][6];
+
+                for (int i = 0; i < songs.size(); i++) {
+                    Song currentSong = songs.get(i);
+                    resultData[i][0] = Integer.toString(i + 1);
+                    resultData[i][1] = currentSong.getSongName();
+                    resultData[i][2] = currentSong.getArtist();
+                    // Assuming a getAlbum() method exists; if not, adjust as needed.
+                    resultData[i][3] = currentSong.getAlbumTitle();
+                    resultData[i][4] = currentSong.favoriteToString();
+                    resultData[i][5] = currentSong.ratingToString();
+                }
+                printTable(resultHeaders, resultData);
+                System.out.println(YELLOW + "Select which song to buy: " + RESET);
+                int choice = getUserChoice();
+                 main_song = songs.get(choice - 1);
+            }
+            else {
+                main_song = songs.get(0);
+            }
+            // Remove song
+            store.sellSong(main_song);
+            System.out.println(GREEN + "SONG " + main_song.getSongName() + " has been added to your library." + RESET);
+            user.addSong(main_song);
+        }
+        if (type.equals("album")) {
+            Album main_album;
+            ArrayList<Album> album = new ArrayList<>();
+            while (album.size() <= 0) {
+                System.out.println("Enter Album Title: " + RESET);
+                String title = scanner.nextLine();
+                album = store.searchAlbum(false,true,title,title);
+            }
+            if (album.size() > 1) {
+                System.out.println(RED + "You have more than one song found." + RESET);
+                System.out.println("");
+                String[] resultHeaders = {"#","Title", "Artist", "Favorite?", "Rating"};
+                String[][] resultData = new String[album.size()][6];
+
+                for (int i = 0; i < album.size(); i++) {
+                    Album curr_album = album.get(i);
+                    resultData[i][0] = Integer.toString(i + 1);
+                    resultData[i][1] = curr_album.getTitle();
+                    resultData[i][2] = curr_album.getArtist();
+                    // Assuming a getAlbum() method exists; if not, adjust as needed.
+                    resultData[i][3] = curr_album.favoriteToString();
+                    resultData[i][4] = curr_album.ratingToString();
+                }
+                printTable(resultHeaders, resultData);
+                System.out.println(YELLOW + "Select which song to buy: " + RESET);
+                int choice = getUserChoice();
+                main_album = album.get(choice - 1);
+            }
+            else {
+                main_album = album.get(0);
+            }
+            // Remove song
+            store.sellAlbum(main_album);
+            System.out.println(GREEN + "SONG " + main_album.getTitle() + " has been added to your library." + RESET);
+            user.addAlbum(main_album);
+        }
     }
 
     public void musicStoreInterface() {
@@ -202,18 +524,20 @@ public class mainUI {
 
             switch (choice) {
                 case 1:
-                    System.out.println(YELLOW + "Search for a Song - Coming Soon!" + RESET);
+                    searchSong("Music Store");
                     promptEnterToContinue();
                     break;
                 case 2:
-                    System.out.println(YELLOW + "Search for an Album - Coming Soon!" + RESET);
+                    searchAlbum("Music Store");
                     promptEnterToContinue();
                     break;
                 case 3:
+                    sellItem("song");
                     System.out.println(YELLOW + "Buy Song to Library - Coming Soon!" + RESET);
                     promptEnterToContinue();
                     break;
                 case 4:
+                    sellItem("album");
                     System.out.println(YELLOW + "Buy Album to Library - Coming Soon!" + RESET);
                     promptEnterToContinue();
                     break;
@@ -228,6 +552,7 @@ public class mainUI {
         }
     }
 
+
     private void displayUserLibraryOptions() {
         clearScreen();
         printTitle("Music Library");
@@ -241,7 +566,23 @@ public class mainUI {
                 {"5", "Exit"}
         };
         printTable(headers, data);
-        handleMusicStoreOptions();
+    }
+
+    public void printSongs() {
+        ArrayList<Song> songs = user.getUserSongs();
+        String[] resultHeaders = {"Title", "Artist", "Album", "Favorite?", "Rating"};
+        String[][] resultData = new String[songs.size()][5];
+
+        for (int i = 0; i < songs.size(); i++) {
+            Song currentSong = songs.get(i);
+            resultData[i][0] = currentSong.getSongName();
+            resultData[i][1] = currentSong.getArtist();
+            // Assuming a getAlbum() method exists; if not, adjust as needed.
+            resultData[i][2] = currentSong.getAlbumTitle();
+            resultData[i][3] = currentSong.favoriteToString();
+            resultData[i][4] = currentSong.ratingToString();
+        }
+        printTable(resultHeaders, resultData);
     }
 
     public void userLibraryInterface() {
@@ -253,11 +594,11 @@ public class mainUI {
 
             switch (choice) {
                 case 1:
-                    System.out.println(YELLOW + "Search for a Song - Coming Soon!" + RESET);
+                    searchSong("User Library");
                     promptEnterToContinue();
                     break;
                 case 2:
-                    System.out.println(YELLOW + "Search for a Album - Coming Soon!" + RESET);
+                    searchAlbum("User Library");
                     promptEnterToContinue();
                     break;
                 case 3:
@@ -265,7 +606,7 @@ public class mainUI {
                     promptEnterToContinue();
                     break;
                 case 4:
-                    System.out.println(YELLOW + "View Songs - Coming Soon!" + RESET);
+                    printSongs();
                     promptEnterToContinue();
                     break;
                 case 5:

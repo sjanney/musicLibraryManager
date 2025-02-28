@@ -55,22 +55,44 @@ public class userLibrary {
         return new_playlists;
     }
 
-    public Song searchSongByTitle(String title) {
+    public ArrayList<Song> searchSongByTitle(String title) {
+        ArrayList<Song> searchResults = new ArrayList<>();
         for (Song song : user_songs) {
             if (title.equals(song.getSongName())) {
-                return song.copy();
+                searchResults.add(song);
             }
         }
-        return null;
+        return searchResults;
     }
 
-    public Song searchSongByArtist(String artist) {
+    public ArrayList<Song> searchSongByArtist(String artist) {
+        ArrayList<Song> searchResults = new ArrayList<>();
         for (Song song : user_songs) {
             if (artist.equals(song.getArtist())) {
-                return song.copy();
+                searchResults.add(song.copy());
             }
         }
-        return null;
+        return searchResults;
+    }
+
+    public ArrayList<Album> searchAlbumByTitle(String title) {
+        ArrayList<Album> searchResults = new ArrayList<>();
+        for (Album album : user_albums) {
+            if (title.equals(album.getTitle())) {
+                searchResults.add(album.copy());
+            }
+        }
+        return searchResults;
+    }
+
+    public ArrayList<Album> searchAlbumByArtist(String artist) {
+        ArrayList<Album> searchResults = new ArrayList<>();
+        for (Album album : user_albums) {
+            if (artist.equals(album.getArtist())) {
+                searchResults.add(album.copy());
+            }
+        }
+        return searchResults;
     }
 
     public void addAlbum(Album album) {

@@ -22,16 +22,16 @@ public class musicStoreTest {
     public void searchAlbumTest() throws FileNotFoundException {
         musicStore m = new musicStore();
         m.loadInventory();
-        Album test_album = m.searchAlbum(false,true,null,"Old Ideas");
+        ArrayList<Album> test_album = m.searchAlbum(false,true,null,"Old Ideas");
         assertNotNull(test_album);
-        Album test_album2 = m.searchAlbum(true,false,"Leonard Cohen",null);
+        ArrayList<Album> test_album2 = m.searchAlbum(true,false,"Leonard Cohen",null);
         assertNotNull(test_album2);
     }
 
     @Test public void searchSongTitleTest() throws FileNotFoundException {
         musicStore m = new musicStore();
         m.loadInventory();
-        Song test_song = m.searchSongByTitle("Fire");
+        ArrayList<Song> test_song = m.searchSongByTitle("Fire");
         assertNotNull(test_song);
     }
 
