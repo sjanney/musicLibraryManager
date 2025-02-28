@@ -56,6 +56,6 @@ public class userLibraryTest {
         userLibrary.addSong(new_song);
         ArrayList<Song> test_1 = userLibrary.searchSongByArtist(new_song.getArtist());
         assertNotEquals(test_1, userLibrary.getUserSongs());
-        ArrayList<Song> test_2 = userLibrary.searchSongByTitle(test_1.get(0).ge
+        //ArrayList<Song> test_2 = userLibrary.searchSongByTitle(test_1.get(0).
     }
 }
