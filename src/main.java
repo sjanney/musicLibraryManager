@@ -1,6 +1,5 @@
 import model.*;
 import view.*;
-
 import java.io.FileNotFoundException;
 
 public class main {

@@ -618,6 +618,17 @@ public class mainUI {
         printTable(resultHeaders, resultData);
     }
 
+    public void setRating() {
+        String[] headers = {"Option", "Description"};
+        String[][] options = {
+                {"1", "Set a Rating for a Song"},
+                {"2", "Set a Rating for a Album"}
+        };
+        printTable(headers, options);
+        int choice = getUserChoice();
+
+    }
+
     public void userLibraryInterface() {
         boolean libraryMode = true;
 
