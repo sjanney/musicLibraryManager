@@ -72,7 +72,7 @@ public class mainUI {
                 {"1", "Music Store"},
                 {"2", "User Library"},
                 {"3", "Create New Playlist"},
-                {"4", "View Library"},
+                {"4", "Set Rating"},
                 {"5", "Set Favorites"},
                 {"6", "Exit"}
         };
@@ -147,20 +147,18 @@ public class mainUI {
         switch (choice) {
             case 1:
                 musicStoreInterface();
-                //System.out.println(YELLOW + "Music Store - Coming Soon!" + RESET);
                 promptEnterToContinue();
                 break;
             case 2:
                 userLibraryInterface();
-                //System.out.println(YELLOW + "User Library - Coming Soon!" + RESET);
                 promptEnterToContinue();
                 break;
             case 3:
-                System.out.println(YELLOW + "Create New Playlist - Coming Soon!" + RESET);
+                createNewPlaylist();
                 promptEnterToContinue();
                 break;
             case 4:
-                System.out.println(YELLOW + "View Library - Coming Soon!" + RESET);
+                System.out.println(YELLOW + "Set Rating - Coming Soon!" + RESET);
                 promptEnterToContinue();
                 break;
             case 5:
@@ -190,7 +188,6 @@ public class mainUI {
                 {"5", "Exit"}
         };
         printTable(headers, data);
-        //handleMusicStoreOptions();
 
 
     }
@@ -533,12 +530,10 @@ public class mainUI {
                     break;
                 case 3:
                     sellItem("song");
-                    System.out.println(YELLOW + "Buy Song to Library - Coming Soon!" + RESET);
                     promptEnterToContinue();
                     break;
                 case 4:
                     sellItem("album");
-                    System.out.println(YELLOW + "Buy Album to Library - Coming Soon!" + RESET);
                     promptEnterToContinue();
                     break;
                 case 5:
@@ -563,7 +558,8 @@ public class mainUI {
                 {"2", "Search for a Album"},
                 {"3", "Create a new Playlist"},
                 {"4", "View Songs"},
-                {"5", "Exit"}
+                {"5", "View Playlists"},
+                {"6", "Exit"}
         };
         printTable(headers, data);
     }
@@ -585,6 +581,43 @@ public class mainUI {
         printTable(resultHeaders, resultData);
     }
 
+    public void createNewPlaylist() {
+        System.out.println("Creating new playlist...");
+        System.out.println(YELLOW + "What do you want your playlist to be named?: " + RESET);
+        String playlistName = scanner.nextLine();
+        Playlist new_playlist = new Playlist(playlistName);
+        user.addPlaylist(new_playlist);
+        // Here we add functionality of adding songs to playlist
+        boolean finished = false;
+        while (!finished) {
+            System.out.println("What songs from your library do you want to add? (Type done to finish): ");
+            String choice = scanner.nextLine();
+            if (choice.equalsIgnoreCase("done")) {
+                finished = true;
+            }
+            else {
+                ArrayList<Song> searchResults = user.searchSongByTitle(choice);
+                for (int i = 0; i < searchResults.size(); i++) {
+                    new_playlist.addSong(searchResults.get(i));
+                }
+            }
+        }
+        System.out.println(GREEN + "New playlist created!" + RESET);
+    }
+
+    public void viewPlaylists() {
+        ArrayList<Playlist> user_playlists = user.getUserPlaylists();
+        String[] resultHeaders = {"Title", "# Songs"};
+        String[][] resultData = new String[user_playlists.size()][2];
+
+        for (int i = 0; i < user_playlists.size(); i++) {
+            Playlist currentSong = user_playlists.get(i);
+            resultData[i][0] = user_playlists.get(i).getTitle();
+            resultData[i][1] = Integer.toString(user_playlists.get(i).getSongs().size());
+        }
+        printTable(resultHeaders, resultData);
+    }
+
     public void userLibraryInterface() {
         boolean libraryMode = true;
 
@@ -602,14 +635,17 @@ public class mainUI {
                     promptEnterToContinue();
                     break;
                 case 3:
-                    System.out.println(YELLOW + "Create a new Playlist - Coming Soon!" + RESET);
+                    createNewPlaylist();
                     promptEnterToContinue();
                     break;
                 case 4:
                     printSongs();
                     promptEnterToContinue();
                     break;
+
                 case 5:
+                    viewPlaylists();
+                case 6:
                     System.out.println(BLUE + "Returning to main menu..." + RESET);
                     libraryMode = false;
                     break;
