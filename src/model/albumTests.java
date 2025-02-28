@@ -69,4 +69,10 @@ public class albumTests {
         new_album = test_album.copy();
         assertNotEquals(test_album, new_album);
     }
+
+    @Test
+    public void setFavoriteTest() {
+        Album test_album = new Album("title","artist",2025);
+        System.out.println(test_album.ratingToString());
+    }
 }

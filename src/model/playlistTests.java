@@ -38,4 +38,13 @@ public class playlistTests {
         test_playlist = new_playlist.copy();
         assertNotEquals(test_playlist,new_playlist);
     }
+
+    @Test public void removeSongTest() {
+        Playlist new_playlist = new Playlist("myPlaylist");
+        Song new_song = new Song("title", "artist", "album");
+        new_playlist.addSong(new_song);
+        assertNotNull(new_playlist.getSongs());
+        new_playlist.removeSong(new_song);
+        assertTrue(new_playlist.getSongs().isEmpty());
+    }
 }

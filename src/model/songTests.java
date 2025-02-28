@@ -84,4 +84,14 @@ public class songTests {
         test_song.setFavorite(true);
         assertTrue(test_song.isFavorite());
     }
+
+    @Test
+    public void printFavorite() {
+        Song test_song = new Song("title", "artist", "album");
+        test_song.setFavorite(true);
+        test_song.setRating(5);
+        System.out.println(test_song.favoriteToString());
+        System.out.println(test_song.ratingToString());
+        System.out.println(test_song.getRating());
+    }
 }

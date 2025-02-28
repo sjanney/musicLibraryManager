@@ -47,5 +47,27 @@ public class musicStoreTest {
         assertNotNull(test_songs);
     }
 
+    @Test public void getAlbumLibrary() throws FileNotFoundException {
+        musicStore m = new musicStore();
+        m.loadInventory();
+        assertNotNull(m.albumInventory());
+    }
+
+    @Test public void sellTest() throws FileNotFoundException {
+        musicStore m = new musicStore();
+        m.loadInventory();
+        ArrayList<Song> test_song = m.searchSong(true, false, "Adele", null);
+        m.sellSong(test_song.get(0));
+        ArrayList<Song> test_song2 = m.searchSongByTitle(test_song.get(0).getSongName());
+        assertTrue(test_song2.isEmpty());
+
+        // Selling Album
+        ArrayList<Album> test_album = m.searchAlbum(true,false,"Adele",null);
+        m.sellAlbum(test_album.get(0));
+        ArrayList<Album> test_album2 = m.searchAlbum(false,true,null,test_album.get(0).getTitle());
+        assertTrue(test_album2.isEmpty());
+
+    }
+
 
 }
