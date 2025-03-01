@@ -56,6 +56,12 @@ public class userLibraryTest {
         userLibrary.addSong(new_song);
         ArrayList<Song> test_1 = userLibrary.searchSongByArtist(new_song.getArtist());
         assertNotEquals(test_1, userLibrary.getUserSongs());
-        //ArrayList<Song> test_2 = userLibrary.searchSongByTitle(test_1.get(0).
+        ArrayList<Album> test_2 = userLibrary.searchAlbumByArtist("Adele");
+        assertNotNull(test_2);
+        test_2 = userLibrary.searchAlbumByTitle("Adele");
+        assertNotNull(test_2);
+        ArrayList<Song> new_song2 = userLibrary.searchSongByTitle(new_song.getSongName());
+        assertNotNull(new_song2.get(0));
+
     }
 }
