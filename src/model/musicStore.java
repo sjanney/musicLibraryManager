@@ -1,7 +1,8 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
-import java.io.*;
 
 public class musicStore {
     // This class is where we implement all the data parsing within data added within our application
@@ -50,7 +51,7 @@ public class musicStore {
         // First we have to load all the possible files that we have into our storefront
 
         // We create a new directory and load all the possible song files
-        File database = new File("albums/");
+        File database = new File("src/albums");
         File[] data_files = database.listFiles();
 
 

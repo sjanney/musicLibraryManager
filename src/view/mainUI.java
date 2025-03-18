@@ -650,9 +650,14 @@ public class mainUI {
         printTable(resultHeaders, resultData);
         System.out.println(YELLOW + "Which Playlist would you want to view?: " + RESET);
         int choice2 = getUserChoice();
-        Playlist playlist = user_playlists.get(choice2-1);
-        for (int i = 0; i < playlist.getSongs().size(); i++) {
-            System.out.println(playlist.getSongs().get(i).getSongName());
+        if (user.getUserPlaylists().size() >= 1) {
+            Playlist playlist = user_playlists.get(choice2-1);
+            for (int i = 0; i < playlist.getSongs().size(); i++) {
+                System.out.println(playlist.getSongs().get(i).getSongName());
+            }
+        }
+        else {
+            System.out.println(RED + "No playlist found.");
         }
     }
 
