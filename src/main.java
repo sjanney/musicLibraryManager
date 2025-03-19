@@ -17,7 +17,7 @@ public class main {
             if (username.equals("STOP")) {
                 running = false;
             }
-            if (username != null) {
+            if (username != null && running) {
                 // We gather the user data
                 if (userAssets.userExists(username)) {
                     userData = userAssets.getUser(username);
