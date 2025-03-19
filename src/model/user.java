@@ -11,15 +11,15 @@ public class user {
         this.userLibrary = new userLibrary();
     }
 
-    musicStore getUserStoreHistory() {
-        return userStoreHistory;
+    public musicStore getUserStore() {
+        return this.userStoreHistory;
     }
 
-    userLibrary getUserLibrary() {
-        return userLibrary;
+    public userLibrary getUserLibrary() {
+        return this.userLibrary;
     }
 
-    String getUsername() {
-        return username;
+    public String getUsername() {
+        return this.username;
     }
 }

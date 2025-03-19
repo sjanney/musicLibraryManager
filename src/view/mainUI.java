@@ -39,11 +39,11 @@ public class mainUI {
     public void startInstance() throws FileNotFoundException {
         // This methods create's the instance of the UI, allowing it to be ran until terminated
         this.store.loadInventory();
-
-        while (true) {
+        boolean running = true;
+        while (running != false) {
             displayMainMenu();
             int choice = getUserChoice();
-            handleMainMenuChoice(choice);
+            running = handleMainMenuChoice(choice);
         }
     }
 
@@ -144,7 +144,7 @@ public class mainUI {
         scanner.nextLine();
     }
 
-    private void handleMainMenuChoice(int choice) {
+    private boolean handleMainMenuChoice(int choice) {
         switch (choice) {
             case 1:
                 musicStoreInterface();
@@ -168,12 +168,12 @@ public class mainUI {
                 break;
             case 6:
                 System.out.println(GREEN + "Thank you for using the Music Library System!" + RESET);
-                System.exit(0);
-                break;
+                return false;
             default:
                 System.out.println(RED + "Invalid choice. Please try again." + RESET);
                 promptEnterToContinue();
         }
+        return false;
     }
 
     public void setFavorite() {
