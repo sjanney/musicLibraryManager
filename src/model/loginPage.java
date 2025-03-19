@@ -151,8 +151,4 @@ public class loginPage {
         return null;
     }
 
-    public static void main(String[] args) {
-        loginPage loginPage = new loginPage();
-        loginPage.startApplication();
-    }
 }

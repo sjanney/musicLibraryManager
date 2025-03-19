@@ -149,23 +149,23 @@ public class mainUI {
             case 1:
                 musicStoreInterface();
                 promptEnterToContinue();
-                break;
+                return true;
             case 2:
                 userLibraryInterface();
                 promptEnterToContinue();
-                break;
+                return true;
             case 3:
                 createNewPlaylist();
                 promptEnterToContinue();
-                break;
+                return true;
             case 4:
                 setRating();
                 promptEnterToContinue();
-                break;
+                return true;
             case 5:
                 setFavorite();
                 promptEnterToContinue();
-                break;
+                return true;
             case 6:
                 System.out.println(GREEN + "Thank you for using the Music Library System!" + RESET);
                 return false;
