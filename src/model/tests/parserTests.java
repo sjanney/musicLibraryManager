@@ -1,5 +1,6 @@
-package model;
+package model.tests;
 
+import model.Parser;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -47,7 +48,7 @@ public class parserTests {
     public void testParserFileReading() throws FileNotFoundException {
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus()); // Parser not ran yet, should be false
-        test_parser.loadFile("albums/19_Adele.txt");
+        test_parser.loadFile("src/albums/19_Adele.txt");
         test_parser.parseFiles();
         assertTrue(test_parser.parserStatus());
         test_parser.parseFiles(); // Should not run, since all files have already been ran
@@ -58,7 +59,7 @@ public class parserTests {
     public void testParserReset() throws FileNotFoundException {
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
-        test_parser.loadFile("albums/19_Adele.txt");
+        test_parser.loadFile("src/albums/19_Adele.txt");
         test_parser.parseFiles();
         test_parser.resetParser();
         assertFalse(test_parser.parserStatus());
@@ -68,8 +69,8 @@ public class parserTests {
     public void loadMultipleFiles() throws FileNotFoundException {
         Parser test_parser = new Parser();
         assertFalse(test_parser.parserStatus());
-        test_parser.loadFile("albums/19_Adele.txt");
-        test_parser.loadFile("albums/21_Adele.txt");
+        test_parser.loadFile("src/albums/19_Adele.txt");
+        test_parser.loadFile("src/albums/21_Adele.txt");
         test_parser.parseFiles();
         test_parser.showData();
     }

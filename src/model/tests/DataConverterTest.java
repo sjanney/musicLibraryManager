@@ -1,6 +1,6 @@
-package model;
-
-
+package model.tests;
+import model.DataConverter;
+import model.Parser;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -18,8 +18,8 @@ public class DataConverterTest {
     @Test
     public void convertDataTest() throws FileNotFoundException {
         Parser parser = new Parser();
-        parser.loadFile("albums/19_Adele.txt");
-        parser.loadFile("albums/21_Adele.txt");
+        parser.loadFile("src/albums/19_Adele.txt");
+        parser.loadFile("src/albums/21_Adele.txt");
         parser.parseFiles();
         DataConverter data = new DataConverter(parser);
         data.convertData();
@@ -31,8 +31,8 @@ public class DataConverterTest {
     @Test
     public void showAlbum() throws FileNotFoundException {
         Parser parser = new Parser();
-        parser.loadFile("albums/19_Adele.txt");
-        parser.loadFile("albums/21_Adele.txt");
+        parser.loadFile("src/albums/19_Adele.txt");
+        parser.loadFile("src/albums/21_Adele.txt");
         parser.parseFiles();
         DataConverter data = new DataConverter(parser);
         data.convertData();

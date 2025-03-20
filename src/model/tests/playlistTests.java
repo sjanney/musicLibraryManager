@@ -1,5 +1,7 @@
-package model;
+package model.tests;
 
+import model.Playlist;
+import model.Song;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
