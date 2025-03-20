@@ -5,6 +5,7 @@ public class userDatabase {
     HashMap<String,String[]> userPasswordPairs;
 
     public userDatabase() {
+
         this.userPasswordPairs = new HashMap<>();
     }
 

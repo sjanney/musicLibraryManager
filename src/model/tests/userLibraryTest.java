@@ -1,5 +1,10 @@
-package model;
+package model.tests;
 import static org.junit.Assert.*;
+
+import model.Album;
+import model.Playlist;
+import model.Song;
+import model.userLibrary;
 import org.junit.Test;
 
 import java.util.ArrayList;

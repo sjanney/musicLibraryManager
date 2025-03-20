@@ -1,9 +1,11 @@
-package model;
+package model.tests;
+
+import model.user;
 
 import java.util.HashMap;
 
 public class userApplicationData {
-    HashMap<String,user> userAssestData;
+    HashMap<String, user> userAssestData;
 
     public userApplicationData() {
         this.userAssestData = new HashMap<>();

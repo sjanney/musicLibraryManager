@@ -1,4 +1,6 @@
-package model;
+package model.tests;
+import model.Album;
+import model.Song;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;

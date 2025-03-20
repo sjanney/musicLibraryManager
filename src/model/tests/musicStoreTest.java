@@ -1,4 +1,7 @@
-package model;
+package model.tests;
+import model.Album;
+import model.Song;
+import model.musicStore;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
