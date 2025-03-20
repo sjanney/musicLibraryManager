@@ -28,6 +28,8 @@ public class Song {
     private final String albumTitle;
     private Rating rating;
     private Favorite isFavorite;
+    private String genre;
+    private int playCount;
 
     public Song(String songName, String artist, String albumTitle) {
         this.songName = songName;
@@ -101,8 +103,29 @@ public class Song {
         this.isFavorite = Favorite.Favorited;
     }
 
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public void incrementPlayCount() {
+        this.playCount++;
+    }
+
     public Song copy() {
-        return new Song(this.songName, this.artist, this.albumTitle);
+        Song copy = new Song(this.songName, this.artist, this.albumTitle);
+        copy.rating = this.rating;
+        copy.isFavorite = this.isFavorite;
+        copy.genre = this.genre;
+        copy.playCount = this.playCount;
+        return copy;
     }
 
 }

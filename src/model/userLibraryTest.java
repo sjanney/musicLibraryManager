@@ -33,7 +33,7 @@ public class userLibraryTest {
     @Test
     public void addPlaylistTest() {
         userLibrary userLibrary = new userLibrary();
-        Playlist new_album = new Playlist("title");
+        Playlist new_album = new Playlist("title", favoriteSongs);
         userLibrary.addPlaylist(new_album);
         assertNotNull(userLibrary.getUserAlbums());
         assertEquals(1, userLibrary.getUserPlaylists().size());
