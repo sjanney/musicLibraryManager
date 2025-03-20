@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*
  * class userLibrary(): This class represents the user library and all their current music, playlists, and Albums
@@ -113,5 +114,36 @@ public class userLibrary {
         user_playlists.add(playlist);
     }
 
+    public void sortedSongs(String type) {
+        // We search for songs based on their sorted order and specific types
 
+        // We first create a deep copy of the songs
+        ArrayList<Song> sortedSongs = new ArrayList<>();
+        for (int i = 0; i < user_songs.size(); i++) {
+            sortedSongs.add(user_songs.get(i));
+        }
+
+        // We then define our specific sorting type
+        if (type.equals("songTitle")) {
+            // We sort by songs
+            String[] titles = new String[sortedSongs.size()];
+
+        }
+        else if (type.equals("artistt")) {
+            // We sort by the artist
+        }
+        else {
+            // We sort by given ratings
+        }
+    }
+
+    public void removeSong(Song song) {
+        // Simply removes song from user's library
+        user_songs.remove(song);
+    }
+
+    public void shuffleSongs() {
+        // Automatically shuffles the songs in the
+        Collections.shuffle(user_songs);
+    }
 }
