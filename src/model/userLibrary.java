@@ -1,6 +1,7 @@
 package model;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 /*
  * class userLibrary(): This class represents the user library and all their current music, playlists, and Albums
@@ -167,9 +168,31 @@ public class userLibrary {
 
     }
 
-    public void removeSong(Song song) {
+    public boolean removeSong(String song) {
+        Scanner scanner = new Scanner(System.in);
         // Simply removes song from user's library
-        user_songs.remove(song);
+        ArrayList<Song> searchResults = new ArrayList<>();
+        for (int i = 0; i < user_songs.size(); i++) {
+            if (user_songs.get(i).getSongName().equals(song)) {
+                searchResults.add(user_songs.get(i));
+            }
+        }
+        // Print all songs that match
+        if (searchResults.size() > 1) {
+            for (int i = 0; i < searchResults.size(); i++) {
+                System.out.println(searchResults.get(i).getSongName() + ": " + searchResults.get(i).getArtist());
+            }
+            System.out.println("Multiple Results, which song will be removed?: ");
+            int choice = scanner.nextInt();
+            user_songs.remove(searchResults.get(choice - 1));
+            return true;
+        }
+        if (searchResults.size() == 0) {
+            return false;
+        }
+        user_songs.remove(searchResults.get(0));
+        return true;
+
     }
 
     public void shuffleSongs() {
@@ -182,10 +205,13 @@ public class userLibrary {
         Song test2 = new Song("test2","test2","test2");
         Song test3 = new Song("test3","test3","test3");
         Song test1 = new Song("test1","test1","test1");
+        test2.setRating(4);
+        test3.setRating(5);
+        test1.setRating(3);
         userLibrary.addSong(test1);
         userLibrary.addSong(test2);
         userLibrary.addSong(test3);
-        Song[] sorted_test = userLibrary.sortedSongs("title");
+        Song[] sorted_test = userLibrary.sortedSongs("rating");
         for (Song song : sorted_test) {
             System.out.println(song.getSongName());
         }
