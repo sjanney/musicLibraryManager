@@ -103,6 +103,14 @@ public class Song {
         this.isFavorite = Favorite.Favorited;
     }
 
+    public boolean equals(Song song) {
+        // Simple equals method to check if a song is equals
+        if (this.songName.equals(song.songName) && this.artist.equals(song.artist) && this.albumTitle.equals(song.albumTitle)) {
+            return true;
+        }
+        return false;
+    }
+
     public Song copy() {
         return new Song(this.songName, this.artist, this.albumTitle);
     }

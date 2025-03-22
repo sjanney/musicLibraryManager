@@ -2,6 +2,7 @@ package model.tests;
 
 import model.user;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class userApplicationData {
@@ -11,7 +12,7 @@ public class userApplicationData {
         this.userAssestData = new HashMap<>();
     }
 
-    public void addNewUserAssets(String username) {
+    public void addNewUserAssets(String username) throws FileNotFoundException {
         this.userAssestData.put(username, new user(username));
     }
 

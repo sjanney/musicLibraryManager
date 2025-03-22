@@ -1,4 +1,5 @@
 package model;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -25,12 +26,15 @@ public class userLibrary {
     private ArrayList<Album> user_albums;
     private ArrayList<Song> user_songs;
     private ArrayList<Playlist> user_playlists;
+    private infoDatabase informationDatabase;
 
-    public userLibrary() {
+    public userLibrary() throws FileNotFoundException {
         // We create each of the users albums,songs, and playlists lists
         this.user_albums = new ArrayList<>();
         this.user_songs = new ArrayList<>();
         this.user_playlists = new ArrayList<>();
+        this.informationDatabase = new infoDatabase();
+        informationDatabase.loadDatabase();
     }
 
     public ArrayList<Album> getUserAlbums() {
@@ -201,24 +205,5 @@ public class userLibrary {
     }
 
     public static void main(String[] args) {
-        userLibrary userLibrary = new userLibrary();
-        Song test2 = new Song("test2","test2","test2");
-        Song test3 = new Song("test3","test3","test3");
-        Song test1 = new Song("test1","test1","test1");
-        test2.setRating(4);
-        test3.setRating(5);
-        test1.setRating(3);
-        userLibrary.addSong(test1);
-        userLibrary.addSong(test2);
-        userLibrary.addSong(test3);
-        Song[] sorted_test = userLibrary.sortedSongs("rating");
-        for (Song song : sorted_test) {
-            System.out.println(song.getSongName());
-        }
-        // Testing shuffling
-        System.out.println(userLibrary.user_songs);
-        userLibrary.shuffleSongs();
-        System.out.println(userLibrary.user_songs);
-
     }
 }
