@@ -10,7 +10,8 @@ import java.util.Objects;
  *      - String artist: Holds the artist name
  *      - String albumTitle: Holds the name of the album the song is located
  *      - Rating rating: Holds the current rating of the song
- *      - Favorite isFavorite: Shows if song is favorite or not
+ *      - Favorite isFavorite: Shows if song
+ *  is favorite or not
  *
  * Methods:
  *      - getSongName(): Returns the name of the song object
