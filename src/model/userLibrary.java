@@ -114,27 +114,57 @@ public class userLibrary {
         user_playlists.add(playlist);
     }
 
-    public void sortedSongs(String type) {
-        // We search for songs based on their sorted order and specific types
-
-        // We first create a deep copy of the songs
-        ArrayList<Song> sortedSongs = new ArrayList<>();
-        for (int i = 0; i < user_songs.size(); i++) {
-            sortedSongs.add(user_songs.get(i));
+    private void insertionSort(Song[] songs, String[] data_types) {
+        // We sort our strings, moving our songs array periodically as well
+        for (int i = 1; i < data_types.length; i++) {
+            String key = data_types[i];
+            Song song_key = songs[i];
+            int j = i - 1;
+            // Here we use compareTo() to compare lexographical order
+            while (j >= 0 && key.compareTo(data_types[j]) < 0 ){
+                data_types[j + 1] = data_types[j];
+                songs[j + 1] = songs[j];
+                j--;
+            }
+            data_types[j + 1] = key;
+            songs[j + 1] = song_key;
         }
+    }
 
-        // We then define our specific sorting type
-        if (type.equals("songTitle")) {
-            // We sort by songs
-            String[] titles = new String[sortedSongs.size()];
-
+    public Song[] sortedSongs(String type) {
+        //First, we gather all the songs of the specific type
+        ArrayList<Song> searchResults = new ArrayList<>();
+        ArrayList<String> data_types = new ArrayList<>();
+        if (type.equals("title")) {
+            // We gather all the songs that match the search
+            for (int i = 0; i < user_songs.size(); i++) {
+                    searchResults.add(user_songs.get(i));
+                    data_types.add(user_songs.get(i).getSongName());
+            }
         }
-        else if (type.equals("artistt")) {
-            // We sort by the artist
+        else if (type.equals("artist")) {
+            for (int i = 0; i < user_songs.size(); i++) {
+                    searchResults.add(user_songs.get(i));
+                    data_types.add(user_songs.get(i).getArtist());
+            }
         }
         else {
-            // We sort by given ratings
+            for (int i = 0; i < user_songs.size(); i++) {
+                    searchResults.add(user_songs.get(i));
+                    data_types.add(user_songs.get(i).getRating().toString());
+            }
         }
+        // We sort our data type array with insertion sort, moving our song list as well
+        String[] string_array = new String[data_types.size()];
+        Song[] song_array = new Song[data_types.size()];
+        for (int i = 0; i < data_types.size(); i++) {
+            string_array[i] = data_types.get(i);
+            song_array[i] = user_songs.get(i);
+        }
+        insertionSort(song_array,string_array);
+        // After this, we simply return our sorted songs based on type
+        return song_array;
+
     }
 
     public void removeSong(Song song) {
@@ -145,5 +175,24 @@ public class userLibrary {
     public void shuffleSongs() {
         // Automatically shuffles the songs in the
         Collections.shuffle(user_songs);
+    }
+
+    public static void main(String[] args) {
+        userLibrary userLibrary = new userLibrary();
+        Song test2 = new Song("test2","test2","test2");
+        Song test3 = new Song("test3","test3","test3");
+        Song test1 = new Song("test1","test1","test1");
+        userLibrary.addSong(test1);
+        userLibrary.addSong(test2);
+        userLibrary.addSong(test3);
+        Song[] sorted_test = userLibrary.sortedSongs("title");
+        for (Song song : sorted_test) {
+            System.out.println(song.getSongName());
+        }
+        // Testing shuffling
+        System.out.println(userLibrary.user_songs);
+        userLibrary.shuffleSongs();
+        System.out.println(userLibrary.user_songs);
+
     }
 }

@@ -1,4 +1,5 @@
 package model;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /*
@@ -28,6 +29,7 @@ public class Song {
     private final String albumTitle;
     private Rating rating;
     private Favorite isFavorite;
+
 
     public Song(String songName, String artist, String albumTitle) {
         this.songName = songName;

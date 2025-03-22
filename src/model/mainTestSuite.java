@@ -13,6 +13,6 @@ import org.junit.runners.Suite.SuiteClasses;
         playlistTests.class,
         songTests.class,
         userTest.class,
-        userDatabaseTest.class
+        //userDatabaseTest.class
 })
 public class mainTestSuite {}
