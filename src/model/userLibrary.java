@@ -199,11 +199,21 @@ public class userLibrary {
 
     }
 
+    public void getSongData(Song song) {
+        // We first print the album title
+        System.out.println("Album Name: " + song.getAlbumTitle());
+        // We gather all the songs
+        String[] songs_in_album = this.informationDatabase.getRelatedAlbumSongs(song);
+        for (int i = 0; i < songs_in_album.length; i++) {
+            System.out.println(songs_in_album[i]);
+        }
+    }
+
+
     public void shuffleSongs() {
         // Automatically shuffles the songs in the
         Collections.shuffle(user_songs);
     }
 
-    public static void main(String[] args) {
-    }
+
 }

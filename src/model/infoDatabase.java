@@ -22,16 +22,21 @@ public class infoDatabase extends musicStore {
         for (int i = 0; i < this.album_stock.size(); i++) {
             Album curr_album = this.album_stock.get(i);
             String key = curr_album.getTitle();
-            String[] songs = this.albumInformation.get(key);
+            ArrayList<String> album_songs = curr_album.getSongs();
+            String[] album_songs_string = new String[album_songs.size()];
+            for (int j = 0; j < album_songs.size(); j++) {
+                album_songs_string[j] = album_songs.get(j).toString();
+            }
             // Place values in hashes
-            this.albumInformation.put(key, songs);
+            this.albumInformation.put(key, album_songs_string);
             this.inUserLibrary.put(key, false);
         }
     }
 
-    public String[] getRelatedAlbum(Song song) {
+    public String[] getRelatedAlbumSongs(Song song) {
         // Get album name
         String relatedAlbum = song.getAlbumTitle();
+        System.out.println(this.albumInformation);
         String[] songs = this.albumInformation.get(relatedAlbum);
         return songs;
     }
@@ -48,5 +53,6 @@ public class infoDatabase extends musicStore {
     public boolean isAlbumInLibrary(String albumName) {
         return this.inUserLibrary.get(albumName);
     }
+
 
 }

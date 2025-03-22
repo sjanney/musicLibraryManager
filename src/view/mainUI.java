@@ -330,6 +330,14 @@ public class mainUI {
                 resultData[i][4] = currentSong.ratingToString();
             }
             printTable(resultHeaders, resultData);
+            // After everything is printed, we ask the user if the want to print extra information
+            System.out.println(BLUE + "Would you want to view more information about the song? (YES/NO): ");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("YES")) {
+                for (int i = 0; i < searchResults.size(); i++) {
+                    user.getSongData(searchResults.get(i));
+                }
+            }
 
         }
     }
