@@ -27,8 +27,8 @@ public class musicStore {
      *
      */
 
-    private ArrayList<Album> album_stock;
-    private ArrayList<Song> song_stock;
+    public ArrayList<Album> album_stock;
+    public ArrayList<Song> song_stock;
 
     public musicStore() {
         // We create our "stock" of music application
@@ -47,7 +47,7 @@ public class musicStore {
         return new ArrayList<>(song_stock);
     }
 
-    public  void loadInventory() throws FileNotFoundException {
+    public void loadInventory() throws FileNotFoundException {
         // First we have to load all the possible files that we have into our storefront
 
         // We create a new directory and load all the possible song files

@@ -111,6 +111,16 @@ public class Album {
         return this.rating.toString();
     }
 
+    public ArrayList<String> getSongs() {
+        ArrayList<String> songs = new ArrayList();
+        for (int i = 0; i < this.track_list.size(); i++) {
+            String curr_song = this.track_list.get(i).getSongName();
+            songs.add(curr_song);
+        }
+        return songs;
+    }
+
+
     public String favoriteToString() {
         if (this.isFavorite == Favorite.Favorited) {
             return "favorite";
