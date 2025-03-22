@@ -19,7 +19,7 @@ public class Playlist {
     private ArrayList<Song> songs;
     private String playlistName;
 
-    public Playlist(String playlistName, ArrayList<Song> favoriteSongs) {
+    public Playlist(String playlistName) {
         this.playlistName = playlistName;
         this.songs = new ArrayList<>();
     }
@@ -41,7 +41,7 @@ public class Playlist {
     }
 
     public Playlist copy() {
-        Playlist playlist = new Playlist(this.playlistName, favoriteSongs);
+        Playlist playlist = new Playlist(this.playlistName);
         for (Song song : this.songs) {
             playlist.addSong(song.copy());
         }
