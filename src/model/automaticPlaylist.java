@@ -18,14 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class automaticPlaylist {
-    private ArrayList<Album> album_stock;
     private ArrayList<Song> song_stock;
     private PlayHistory playHistory;
 
-    public automaticPlaylist(ArrayList<Album> album_stock, ArrayList<Song> song_stock) {
-        this.album_stock = album_stock;
+    public automaticPlaylist(ArrayList<Song> song_stock) {
         this.song_stock = song_stock;
-        this.playHistory = new PlayHistory(song_stock, album_stock);
+        this.playHistory = new PlayHistory(song_stock);
     }
 
     public void recordPlay(Song song) {
@@ -52,11 +50,51 @@ public class automaticPlaylist {
         return new Playlist("Top Rated Songs", topRatedSongs);
     }
 
+    public Playlist getMostPlayedPlayList() {
+        ArrayList<Song> mostPlayed = playHistory.getMostPlayedPlayList();
+        return new Playlist("Most Played", mostPlayed);
+    }
+
+    public Playlist getRecentlyPlayedList() {
+        ArrayList<Song> mostPlayed = playHistory.getRecentlyPlayedList();
+        return new Playlist("Recently Played", mostPlayed);
+    }
+
+    public List<Playlist> getGenrePlaylists() {
+        ArrayList<Playlist> genrePlaylists = new ArrayList<>();
+
+        ArrayList<String> genres = new ArrayList<>();
+        for (Song song : song_stock) {
+            String genre = song.getGenre();
+            if(genre != null && !genre.isEmpty() && !genre.contains(genre)) {
+                genres.add(genre);
+            }
+        }
+        for (String genre : genres){
+            ArrayList<Song> songsInGenre = new ArrayList<>();
+
+            for (Song song : song_stock) {
+                if(genre.equals(song.getGenre())) {
+                    songsInGenre.add(song);
+                }
+            }
+
+            if (songsInGenre.size() >= 10) {
+                Playlist genrePlaylist = new Playlist("Genre Playlist", songsInGenre);
+                genrePlaylists.add(genrePlaylist);
+            }
+        }
+        return genrePlaylists;
+    }
+
     public List<Playlist> getAllAutomaticPlaylist(){
         ArrayList<Playlist> automaticPlaylist = new ArrayList<>();
 
         automaticPlaylist.add(getTopRatedPlaylist());
         automaticPlaylist.add(getFavoriteSongsPlaylist());
+        automaticPlaylist.add(getMostPlayedPlayList());
+        automaticPlaylist.addAll(getGenrePlaylists());
+        automaticPlaylist.add(getRecentlyPlayedList());
 
 
 

@@ -83,6 +83,7 @@ public class songTests {
         assertFalse(test_song.isFavorite());
         test_song.setFavorite(true);
         assertTrue(test_song.isFavorite());
+        assertEquals(test_song.getPlayCount(),test_song.getPlayCount());
     }
 
     @Test
@@ -94,4 +95,29 @@ public class songTests {
         System.out.println(test_song.ratingToString());
         System.out.println(test_song.getRating());
     }
+    
+    @Test
+    public void addPlayTest(){
+        //this test the increment playcount method of the song class
+        Song test_song = new Song("title", "artist", "album");
+        assertEquals(test_song.getPlayCount(),0);
+        test_song.incrementPlayCount();
+        assertEquals(test_song.getPlayCount(),1);
+        test_song.incrementPlayCount();
+        assertEquals(test_song.getPlayCount(),2);
+    }
+
+    @Test
+    public void testGenre(){
+        Song test_song = new Song("title", "artist", "album");
+        assertNull(test_song.getGenre());
+
+        test_song.setGenre("ROCK");
+        assertEquals(test_song.getGenre(),"ROCK");
+
+        test_song.setGenre("CLASSICAL");
+        assertEquals(test_song.getGenre(),"CLASSICAL");
+    }
+
+
 }

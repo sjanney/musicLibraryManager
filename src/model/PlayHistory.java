@@ -7,7 +7,7 @@ public class PlayHistory {
     private ArrayList<Album> album_stock;
     private ArrayList<Song> recentlyPlayedList = new ArrayList<>();
 
-    public PlayHistory() {
+    public PlayHistory(ArrayList<Song> song_stock) {
         this.recentlyPlayedList = new ArrayList<>();
     }
 
@@ -20,7 +20,7 @@ public class PlayHistory {
     public void addPlay(Song song) {
         //keeps track of the song plays and the most recently played list
         recentlyPlayedList.remove(song);
-        recentlyPlayedList.addFirst(song);
+        recentlyPlayedList.add(0, song);
 
         if( recentlyPlayedList.size() > 15 ) {
             recentlyPlayedList = new ArrayList<>(recentlyPlayedList.subList(0, 15));
@@ -33,7 +33,7 @@ public class PlayHistory {
         return new ArrayList<>(recentlyPlayedList.subList(0, resultSize));
     }
 
-    public ArrayList<Song> getMostRecentlyPlayedList() {
+    public ArrayList<Song> getMostPlayedPlayList() {
         // returns an empty list if noting has played recently
         if(song_stock == null || song_stock.isEmpty()) {
             return new ArrayList<>();

@@ -617,7 +617,7 @@ public class mainUI {
         System.out.println("Creating new playlist...");
         System.out.println(YELLOW + "What do you want your playlist to be named?: " + RESET);
         String playlistName = scanner.nextLine();
-        Playlist new_playlist = new Playlist(playlistName, favoriteSongs);
+        Playlist new_playlist = new Playlist(playlistName);
         user.addPlaylist(new_playlist);
         // Here we add functionality of adding songs to playlist
         boolean finished = false;
