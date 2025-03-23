@@ -107,9 +107,9 @@ public class userLibrary {
     }
 
     public void addAlbum(Album album) {
+        this.informationDatabase.markAlbumInLibrary(album.getTitle());
         user_albums.add(album);
     }
-
 
     public void addSong(Song song) {
         user_songs.add(song);
@@ -208,7 +208,6 @@ public class userLibrary {
             System.out.println(songs_in_album[i]);
         }
     }
-
 
     public void shuffleSongs() {
         // Automatically shuffles the songs in the

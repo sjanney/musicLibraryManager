@@ -14,5 +14,6 @@ import org.junit.runners.Suite.SuiteClasses;
         songTests.class,
         userTest.class,
         //userDatabaseTest.class
+        infoDatabaseTest.class
 })
 public class mainTestSuite {}

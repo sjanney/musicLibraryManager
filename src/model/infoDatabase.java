@@ -36,7 +36,6 @@ public class infoDatabase extends musicStore {
     public String[] getRelatedAlbumSongs(Song song) {
         // Get album name
         String relatedAlbum = song.getAlbumTitle();
-        System.out.println(this.albumInformation);
         String[] songs = this.albumInformation.get(relatedAlbum);
         return songs;
     }
@@ -49,6 +48,7 @@ public class infoDatabase extends musicStore {
     public void markAlbumInLibrary(String albumName) {
         this.inUserLibrary.put(albumName, true);
     }
+
 
     public boolean isAlbumInLibrary(String albumName) {
         return this.inUserLibrary.get(albumName);
