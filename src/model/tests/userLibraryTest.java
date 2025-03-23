@@ -21,7 +21,7 @@ public class userLibraryTest {
     @Test
     public void addAlbumTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
-        Album new_album = new Album("title","artist",2025);
+        Album new_album = new Album("title","artist",2025,"test");
         userLibrary.addAlbum(new_album);
         assertNotNull(userLibrary.getUserAlbums());
         assertEquals(1, userLibrary.getUserAlbums().size());
@@ -30,7 +30,7 @@ public class userLibraryTest {
     @Test
     public void addSongTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
-        Song new_song = new Song("title","artist","album");
+        Song new_song = new Song("title","artist","album","test");
         userLibrary.addSong(new_song);
         assertNotNull(userLibrary.getUserSongs());
         assertEquals(1, userLibrary.getUserSongs().size());
@@ -48,7 +48,7 @@ public class userLibraryTest {
     @Test
     public void testUnprotected() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
-        Song new_song = new Song("title","artist","album");
+        Song new_song = new Song("title","artist","album","test");
         userLibrary.addSong(new_song);
         assertNotNull(userLibrary.getUserSongs());
         ArrayList<Song> userSongs = userLibrary.getUnprotectedSongs();
@@ -58,7 +58,7 @@ public class userLibraryTest {
     @Test
     public void searchTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
-        Song new_song = new Song("title","artist","album");
+        Song new_song = new Song("title","artist","album","test");
         userLibrary.addSong(new_song);
         ArrayList<Song> test_1 = userLibrary.searchSongByArtist(new_song.getArtist());
         assertNotEquals(test_1, userLibrary.getUserSongs());

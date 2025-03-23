@@ -1,4 +1,7 @@
 package model;
+import javax.xml.crypto.Data;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class DataConverter {
@@ -47,6 +50,7 @@ public class DataConverter {
             String album_name = header.get(0);
             String artist_name = header.get(1);
             String year = header.get(3);
+            String genre = header.get(2);
 
             // Debugging information, to make sure everything is working well
             /*System.out.println("album_name: " + album_name);
@@ -57,7 +61,7 @@ public class DataConverter {
 
             // We first create our album, then add the songs to be
             int new_year = Integer.parseInt(year);
-            Album curr_album = new Album(album_name,artist_name,new_year);
+            Album curr_album = new Album(album_name,artist_name,new_year,genre);
             curr_album.addTracks(data);
             this.albums.add(curr_album);
         }
@@ -83,7 +87,6 @@ public class DataConverter {
             System.out.println("Songs: " + this.albums.get(i).getTracks().size());
         }
     }
-
 
 
 }

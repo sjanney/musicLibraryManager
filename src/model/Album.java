@@ -35,11 +35,12 @@ public class Album {
     private Rating rating;
     private Favorite isFavorite;
     private final int year;
+    private String genre;
     private ArrayList<Song> track_list;
     // Attribute used when creating a copy of all the songs
     private  ArrayList<String> raw_data;
 
-    public Album(String title, String artist,int year) {
+    public Album(String title, String artist,int year,String genre) {
         // We create our Album with these attributes
         this.albumTitle = title;
         this.artist = artist;
@@ -47,7 +48,7 @@ public class Album {
         this.track_list = new ArrayList<Song>();
         this.isFavorite = Favorite.Unfavorited;
         this.rating = Rating.None;
-
+        this.genre = genre;
     }
 
     public void addTracks(ArrayList<String> song_data) {
@@ -59,7 +60,7 @@ public class Album {
             String artist_name = this.artist;
             String album_title = this.albumTitle;
             // Add to tracklist
-            Song curr_song = new Song(song_name,artist_name,album_title);
+            Song curr_song = new Song(song_name,artist_name,album_title,this.genre);
             this.track_list.add(curr_song);
         }
     }
@@ -95,7 +96,7 @@ public class Album {
 
     public Album copy() {
         // We first create a new object
-        Album copy_album = new Album(this.albumTitle, this.artist, this.year);
+        Album copy_album = new Album(this.albumTitle, this.artist, this.year,this.genre);
 
         // We then add the rest of the fields
         copy_album.albumTitle = this.albumTitle;
@@ -120,6 +121,9 @@ public class Album {
         return songs;
     }
 
+    public String getGenre() {
+        return genre;
+    }
 
     public String favoriteToString() {
         if (this.isFavorite == Favorite.Favorited) {

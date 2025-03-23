@@ -30,9 +30,10 @@ public class Song {
     private final String albumTitle;
     private Rating rating;
     private Favorite isFavorite;
+    private String genre;
 
 
-    public Song(String songName, String artist, String albumTitle) {
+    public Song(String songName, String artist, String albumTitle,String genre) {
         this.songName = songName;
         this.artist = artist;
         this.albumTitle = albumTitle;
@@ -90,6 +91,10 @@ public class Song {
         return this.rating.toString();
     }
 
+    public String getGenre() {
+        return this.genre;
+    }
+
     public String favoriteToString() {
         if (this.isFavorite == Favorite.Favorited) {
             return "favorite";
@@ -113,7 +118,7 @@ public class Song {
     }
 
     public Song copy() {
-        return new Song(this.songName, this.artist, this.albumTitle);
+        return new Song(this.songName, this.artist, this.albumTitle,this.genre);
     }
 
 }
