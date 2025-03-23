@@ -31,6 +31,7 @@ public class Song {
     private Rating rating;
     private Favorite isFavorite;
     private String genre;
+    int playCount;
 
 
     public Song(String songName, String artist, String albumTitle,String genre) {
@@ -39,6 +40,15 @@ public class Song {
         this.albumTitle = albumTitle;
         this.rating = Rating.None;
         this.isFavorite = Favorite.Unfavorited;
+        this.genre = genre;
+    }
+
+    public void addPlayCount() {
+        playCount++;
+    }
+
+    public int getPlayCount() {
+        return this.playCount;
     }
 
     public String getSongName() {

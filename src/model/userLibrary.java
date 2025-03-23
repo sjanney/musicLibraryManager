@@ -1,4 +1,5 @@
 package model;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +114,14 @@ public class userLibrary {
 
     public void addSong(Song song) {
         user_songs.add(song);
+    }
+
+    public void deletePlaylist(String playlistName) {
+        for (int i = 0; i < user_playlists.size(); i++) {
+            if (user_playlists.get(i).getPlaylistName().equals(playlistName)) {
+                user_playlists.remove(i);
+            }
+        }
     }
 
     public void addPlaylist(Playlist playlist) {

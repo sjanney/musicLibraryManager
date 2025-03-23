@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 public class user {
     String username;
     musicStore userStoreHistory;
-    userLibrary userLibrary;
+    model.userLibrary userLibrary;
 
     public user(String username) throws FileNotFoundException {
         this.username = username;
