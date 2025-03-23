@@ -1,4 +1,5 @@
 package model;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /*
@@ -9,7 +10,8 @@ import java.util.Objects;
  *      - String artist: Holds the artist name
  *      - String albumTitle: Holds the name of the album the song is located
  *      - Rating rating: Holds the current rating of the song
- *      - Favorite isFavorite: Shows if song is favorite or not
+ *      - Favorite isFavorite: Shows if song
+ *  is favorite or not
  *
  * Methods:
  *      - getSongName(): Returns the name of the song object
@@ -28,6 +30,7 @@ public class Song {
     private final String albumTitle;
     private Rating rating;
     private Favorite isFavorite;
+
 
     public Song(String songName, String artist, String albumTitle) {
         this.songName = songName;
@@ -99,6 +102,14 @@ public class Song {
             this.isFavorite = Favorite.Unfavorited;
         }
         this.isFavorite = Favorite.Favorited;
+    }
+
+    public boolean equals(Song song) {
+        // Simple equals method to check if a song is equals
+        if (this.songName.equals(song.songName) && this.artist.equals(song.artist) && this.albumTitle.equals(song.albumTitle)) {
+            return true;
+        }
+        return false;
     }
 
     public Song copy() {

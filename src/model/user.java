@@ -1,11 +1,13 @@
 package model;
 
+import java.io.FileNotFoundException;
+
 public class user {
     String username;
     musicStore userStoreHistory;
     userLibrary userLibrary;
 
-    public user(String username) {
+    public user(String username) throws FileNotFoundException {
         this.username = username;
         this.userStoreHistory = new musicStore();
         this.userLibrary = new userLibrary();

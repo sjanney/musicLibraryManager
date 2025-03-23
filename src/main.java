@@ -14,7 +14,7 @@ public class main {
         while (running) {
             // WE check if the user is able to log in or not
             String username = mainPage.startApplication();
-            // If sucessful
+            // Checking
             if (username.equals("STOP")) {
                 running = false;
             }

@@ -1,10 +1,13 @@
 package model.tests;
 import org.junit.*;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.Assert.assertNotNull;
 
 public class userApplicationDataTest {
     @Test
-    public void initalTest() {
+    public void initalTest() throws FileNotFoundException {
         userApplicationData userApplicationData = new userApplicationData();
         userApplicationData.addNewUserAssets("user1");
         userApplicationData.addNewUserAssets("user2");

@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Collections;
 /*
  * class Playlist(): This class creates a playlist object that is stored within the user's library
  *
@@ -54,6 +55,10 @@ public class Playlist {
 
     public void removeSong(Song song) {
         this.songs.remove(song);
+    }
+
+    public void shuffleSongs() {
+        Collections.shuffle(this.songs);
     }
 
 }

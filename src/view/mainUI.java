@@ -330,6 +330,14 @@ public class mainUI {
                 resultData[i][4] = currentSong.ratingToString();
             }
             printTable(resultHeaders, resultData);
+            // After everything is printed, we ask the user if the want to print extra information
+            System.out.println(BLUE + "Would you want to view more information about the song? (YES/NO): ");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("YES")) {
+                for (int i = 0; i < searchResults.size(); i++) {
+                    user.getSongData(searchResults.get(i));
+                }
+            }
 
         }
     }
@@ -591,7 +599,8 @@ public class mainUI {
                 {"3", "Create a new Playlist"},
                 {"4", "View Songs"},
                 {"5", "View Playlists"},
-                {"6", "Exit"}
+                {"6", "Remove a Song"},
+                {"7", "Exit"}
         };
         printTable(headers, data);
     }
@@ -691,6 +700,7 @@ public class mainUI {
             int choice = getUserChoice();
 
             switch (choice) {
+
                 case 1:
                     searchSong("User Library");
                     promptEnterToContinue();
@@ -710,7 +720,18 @@ public class mainUI {
 
                 case 5:
                     viewPlaylists();
+
                 case 6:
+                    System.out.println(BLUE + "What Song do you want to remove?: " + RESET);
+                    String song = scanner.nextLine();
+                    boolean removed = user.removeSong(song);
+                    if (removed) {
+                        System.out.println(GREEN + "SUCCESSFULLY REMOVED" + RESET);
+                    }
+                    else {
+                        System.out.println(RED + "ERROR: Song not found" + RESET);
+                    }
+                case 7:
                     System.out.println(BLUE + "Returning to main menu..." + RESET);
                     libraryMode = false;
                     break;

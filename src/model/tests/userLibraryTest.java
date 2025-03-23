@@ -7,18 +7,19 @@ import model.Song;
 import model.userLibrary;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class userLibraryTest {
 
     @Test
-    public void initalTest() {
+    public void initalTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         assertNotNull(userLibrary);
     }
 
     @Test
-    public void addAlbumTest() {
+    public void addAlbumTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         Album new_album = new Album("title","artist",2025);
         userLibrary.addAlbum(new_album);
@@ -27,7 +28,7 @@ public class userLibraryTest {
     }
 
     @Test
-    public void addSongTest() {
+    public void addSongTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         Song new_song = new Song("title","artist","album");
         userLibrary.addSong(new_song);
@@ -36,7 +37,7 @@ public class userLibraryTest {
     }
 
     @Test
-    public void addPlaylistTest() {
+    public void addPlaylistTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         Playlist new_album = new Playlist("title");
         userLibrary.addPlaylist(new_album);
@@ -45,7 +46,7 @@ public class userLibraryTest {
     }
 
     @Test
-    public void testUnprotected() {
+    public void testUnprotected() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         Song new_song = new Song("title","artist","album");
         userLibrary.addSong(new_song);
@@ -55,7 +56,7 @@ public class userLibraryTest {
     }
 
     @Test
-    public void searchTest() {
+    public void searchTest() throws FileNotFoundException {
         userLibrary userLibrary = new userLibrary();
         Song new_song = new Song("title","artist","album");
         userLibrary.addSong(new_song);
