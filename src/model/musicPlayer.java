@@ -43,7 +43,7 @@ public class musicPlayer {
             for (String key : this.frequencyCount.keySet()) {
                 temp.add(this.songHistory.get(key));
             }
-        } else {
+        } if (this.favoriteSongs.size() > 10) {
             // Since we have a amount greater than 10 we have to rebuild the frequency list
 
             // We gather all counts and get the minimum value in the list for the top 10 elements
@@ -95,36 +95,6 @@ public class musicPlayer {
         maintainSongLists();
     }
 
-    public static void main(String args[]) {
-        musicPlayer mp = new musicPlayer();
-        Song test = new Song("test","test","test","test");
-        Song test2 = new Song("test2","test","test","test");
-        Song test3 = new Song("test3","test","test","test");
-        Song test4 = new Song("test4","test","test","test");
-        Song test5 = new Song("test5","test","test","test");
-        Song test6 = new Song("test6","test","test","test");
-        Song test7 = new Song("test7","test","test","test");
-        Song test8 = new Song("test8","test","test","test");
-        Song test9 = new Song("test9","test","test","test");
-        Song test10 = new Song("test10","test","test","test");
-        Song test11 = new Song("test11","test","test","test");
-        // We play the song
-        mp.playSong(test);
-        mp.playSong(test);
-        mp.playSong(test2);
-        mp.playSong(test3);
-        mp.playSong(test4);
-        mp.playSong(test5);
-        mp.playSong(test6);
-        mp.playSong(test7);
-        mp.playSong(test8);
-        mp.playSong(test9);
-        mp.playSong(test10);
-        mp.playSong(test11);
-        ArrayList<Song> songs = mp.getMostFrequentlyPlayedSongs();
-        for (Song song : songs) {
-            System.out.println(song.getSongName());
-        }
-    }
+
 
 }
