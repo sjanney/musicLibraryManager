@@ -9,12 +9,80 @@ import java.util.Base64;
 import java.util.Scanner;
 
 public class loginPage {
-    userDatabase db;
-    Scanner scanner = new Scanner(System.in);
+    private userDatabase db;
+    public Scanner scanner = new Scanner(System.in);
 
     public loginPage() {
         this.db = new userDatabase();
     }
+
+    public void testLogin() {
+        String username = "test";
+        String password = "test";
+        // We then generate our salt
+        byte[] salt_length = new byte[5]; // Creating a 5 length salt
+        new SecureRandom().nextBytes(salt_length);
+        String salt = Base64.getEncoder().encodeToString(salt_length);
+        // After we do this, we then hash the password with the salt we created
+        try {
+            // We define our iterations and key length
+            int iterations = 10000;
+            int keyLength = 256;
+            // Create a key using SHA-2 Algo
+            SecretKeyFactory key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            //Generate's new password in Base 64
+            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt_length, iterations, keyLength );
+            // Convert to String
+            String hashedPassword = Base64.getEncoder().encodeToString(key.generateSecret(spec).getEncoded() );
+
+            // Then we finally place them inside of our userdatabase
+            String[] auth_data = new String[2];
+            auth_data[0] = salt;
+            auth_data[1] = hashedPassword;
+            this.db.addUser(username, auth_data);
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String testVerify() {
+        String username = "test";
+        String password = "test";
+        // Retrieve the stored authentication data (salt and hashed password) from the database
+        String[] auth_data = this.db.getUserAuthData(username);
+        if (auth_data == null || auth_data.length < 2) {
+            System.out.println("User not found or invalid authentication data.");
+            return null;
+        }
+        String storedSalt = auth_data[0];
+        String storedHashedPassword = auth_data[1];
+
+        // After that, we hash the inputted password with the collected previous salt
+        try {
+            int iterations = 10000;
+            int keyLength = 256;
+            SecretKeyFactory key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] saltBytes = Base64.getDecoder().decode(storedSalt);
+            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), saltBytes, iterations, keyLength);
+            String hashedPassword = Base64.getEncoder().encodeToString(key.generateSecret(spec).getEncoded());
+
+            // Compare the newly hashed password with the stored hashed password
+            if (hashedPassword.equals(storedHashedPassword)) {
+                System.out.println("User verified successfully!");
+                return username; // Passwords match
+            } else {
+                System.out.println("Invalid username or password.");
+                return null; // Passwords do not match
+            }
+        } catch (Exception e) {
+            System.err.println("Error during password verification: " + e.getMessage());
+        }
+        return null;
+    }
+
 
     public void registerUser() {
         //First, we get the user's credientials

@@ -12,7 +12,7 @@ public class musicPlayer {
     ArrayList<Song> favoriteSongs;
     ArrayList<Song> topRatedSongs;
 
-    musicPlayer() {
+    public musicPlayer() {
         this.recentlyPlayedSongs = new ArrayList<>();
         this.mostFrequentlyPlayedSongs = new ArrayList<>();
         this.songHistory = new HashMap<>();
@@ -30,7 +30,7 @@ public class musicPlayer {
     }
 
 
-    private void maintainSongLists() {
+    public void maintainSongLists() {
         // Limit recently played songs list to last 10
         while (this.recentlyPlayedSongs.size() > 10) {
             this.recentlyPlayedSongs.remove(0);
