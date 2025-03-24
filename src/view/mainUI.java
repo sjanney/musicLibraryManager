@@ -246,7 +246,6 @@ public class mainUI {
                     }
                     searchResults = store.searchSong(true, false,searchTerm, "");
                     break;
-
                 default:
                     System.out.println("Invalid option selected.");
                     return;
@@ -422,8 +421,6 @@ public class mainUI {
         } else {
             // User Library
 
-            /// This is for the user library
-
             // Display the search options table.
             String[] headers = {"Option", "Description"};
             String[][] options = {
@@ -440,10 +437,22 @@ public class mainUI {
                 case 1:
                     // Search by Title
                     while (searchTerm.trim().isEmpty()) {
-                        System.out.print(YELLOW + "Enter Song Title: " + RESET);
+                        System.out.print(YELLOW + "Enter Album Title: " + RESET);
                         searchTerm = scanner.nextLine();
                     }
                     searchResults = user.searchAlbumByTitle(searchTerm);
+                    // We check to see if the album is in the user's library or not
+                    boolean contains = true;
+                    for (Album album : searchResults) {
+                        if (user.getUserAlbums().contains(album)) {
+                            System.out.println(BLUE + "Album in Library: " + RED + "False" + RESET);
+                            contains = false;
+                            break;
+                        }
+                    }
+                    if (contains) {
+                        System.out.println(BLUE + "Album in Library: " + GREEN + "True" + RESET);
+                    }
                     break;
 
                 case 2:
@@ -453,6 +462,18 @@ public class mainUI {
                         searchTerm = scanner.nextLine();
                     }
                     searchResults = user.searchAlbumByArtist(searchTerm);
+                    // We check to see if the album is in the user's library or not
+                    boolean contains2 = true;
+                    for (Album album : searchResults) {
+                        if (user.getUserAlbums().contains(album)) {
+                            System.out.println(BLUE + "Album in Library: " + RED + "False" + RESET);
+                            contains2 = false;
+                            break;
+                        }
+                    }
+                    if (contains2) {
+                        System.out.println(BLUE + "Album in Library: " + GREEN + "True" + RESET);
+                    }
                     break;
 
                 default:
@@ -613,6 +634,7 @@ public class mainUI {
                 {"5", "View Playlists"},
                 {"6", "Remove a Song"},
                 {"7", "Play a Song"},
+                {"8", "Shuffle Songs"},
                 {"8", "Exit"}
         };
         printTable(headers, data);
@@ -628,9 +650,13 @@ public class mainUI {
         String[] data_type = new String[songs.size()];
         // We ask the user how they want the songs organized by
         System.out.println(BLUE + "Searching for songs..." + RESET);
-        System.out.println(PURPLE + "How do you want the songs to be organized by? (Title, Artist, Rating): " + RESET);
+        System.out.println(PURPLE + "How do you want the songs to be organized by? (Title, Artist, Rating, Shuffled): " + RESET);
         String type = scanner.nextLine();
         for (int i = 0; i < temp.length; i++) {
+            ArrayList<Song> song_temp = user.getUserSongs();
+            for (Song song : song_temp) {
+                temp[i] = song;
+            }
             temp[i] = songs.get(i);
             if (type.equals("Title")) {
                 data_type[i] = temp[i].getSongName();
@@ -638,7 +664,7 @@ public class mainUI {
             else if (type.equals("Artist")) {
                 data_type[i] = temp[i].getArtist();
             }
-            else {
+            else if (type.equals("Rating")) {
                 if (temp[i].getRating() == Rating.None) {
                     data_type[i] = "0";
                 }
@@ -658,20 +684,39 @@ public class mainUI {
                     data_type[i] = "5";
                 }
             }
+            else if (type.equals("Shuffled")) {
+                user.shuffleSongs();
+                for (Song song : user.getUserSongs()) {
+                    temp[i] = song;
+                }
+            }
+        }
+        // We sort if we didn't shuffle
+        String[][] resultData = new String[songs.size()][5];
+        if (!type.equals("Shuffled")) {
+            // We then sort the songs based on the data type
+            user.insertionSort(temp, data_type);
+            for (int i = 0; i < songs.size(); i++) {
+                Song currentSong = temp[i];
+                resultData[i][0] = currentSong.getSongName();
+                resultData[i][1] = currentSong.getArtist();
+                // Assuming a getAlbum() method exists; if not, adjust as needed.
+                resultData[i][2] = currentSong.getAlbumTitle();
+                resultData[i][3] = currentSong.favoriteToString();
+                resultData[i][4] = currentSong.ratingToString();
+            }
         }
 
-        // We then sort the songs based on the data type
-        user.insertionSort(temp, data_type);
-        String[][] resultData = new String[songs.size()][5];
-
-        for (int i = 0; i < songs.size(); i++) {
-            Song currentSong = temp[i];
-            resultData[i][0] = currentSong.getSongName();
-            resultData[i][1] = currentSong.getArtist();
-            // Assuming a getAlbum() method exists; if not, adjust as needed.
-            resultData[i][2] = currentSong.getAlbumTitle();
-            resultData[i][3] = currentSong.favoriteToString();
-            resultData[i][4] = currentSong.ratingToString();
+        else {
+            for (int i = 0; i < songs.size(); i++) {
+                Song currentSong = temp[i];
+                resultData[i][0] = currentSong.getSongName();
+                resultData[i][1] = currentSong.getArtist();
+                // Assuming a getAlbum() method exists; if not, adjust as needed.
+                resultData[i][2] = currentSong.getAlbumTitle();
+                resultData[i][3] = currentSong.favoriteToString();
+                resultData[i][4] = currentSong.ratingToString();
+            }
         }
         printTable(resultHeaders, resultData);
     }
@@ -800,7 +845,11 @@ public class mainUI {
                     }
                     System.out.println(GREEN + "SUCCESSFULLY PLAYED: " + song_name + RESET);
                     break;
+
                 case 8:
+                    user.shuffleSongs();
+                    System.out.println(GREEN + "All Songs Shuffled" + RESET);
+                case 9:
                     System.out.println(BLUE + "Returning to main menu..." + RESET);
                     libraryMode = false;
                     break;
