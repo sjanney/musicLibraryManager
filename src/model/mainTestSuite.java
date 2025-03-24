@@ -13,7 +13,9 @@ import org.junit.runners.Suite.SuiteClasses;
         playlistTests.class,
         songTests.class,
         userTest.class,
-        //userDatabaseTest.class
-        infoDatabaseTest.class
+        userDatabaseTest.class,
+        infoDatabaseTest.class,
+        loginPageTests.class,
+        musicPlayerTest.class
 })
 public class mainTestSuite {}
