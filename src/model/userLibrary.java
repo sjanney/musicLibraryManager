@@ -1,9 +1,7 @@
 package model;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 /*
  * class userLibrary(): This class represents the user library and all their current music, playlists, and Albums
@@ -28,6 +26,8 @@ public class userLibrary {
     private ArrayList<Song> user_songs;
     private ArrayList<Playlist> user_playlists;
     private infoDatabase informationDatabase;
+    private musicPlayer musicPlayer;
+    private HashMap<String,ArrayList<Song>> userGenrePlaylist;
 
     public userLibrary() throws FileNotFoundException {
         // We create each of the users albums,songs, and playlists lists
@@ -35,7 +35,51 @@ public class userLibrary {
         this.user_songs = new ArrayList<>();
         this.user_playlists = new ArrayList<>();
         this.informationDatabase = new infoDatabase();
-        informationDatabase.loadDatabase();
+        this.informationDatabase.loadDatabase();
+        this.musicPlayer = new musicPlayer();
+        // Create automatic playlists
+        Playlist favoriteSongs = new Playlist("Favorite Songs");
+        Playlist topRatedSongs = new Playlist("Top Rated Songs");
+        user_playlists.add(favoriteSongs);
+        user_playlists.add(topRatedSongs);
+        userGenrePlaylist = new HashMap<>();
+    }
+
+    public void updateUserCuratedPlaylist() {
+        // First we delete all of the previous playlists within the user's library
+        for (int i = user_playlists.size() - 1; i >= 0; i--) {
+            Playlist playlist = user_playlists.get(i);
+            if (playlist.getTitle().equals("Favorite Songs") || playlist.getTitle().equals("Top Rated Songs")) {
+                user_playlists.remove(i);
+            }
+        }
+        // We then search for the songs that fit the automatic playlists
+        ArrayList<Song> topRatedSongs = new ArrayList<>();
+        ArrayList<Song> favoriteSongs = new ArrayList<>();
+        for (int i = 0; user_songs.size() > i; i++) {
+            Song curr_song = user_songs.get(i);
+            if (curr_song.getRating() == Rating.FIVE || curr_song.getRating() == Rating.FOUR || curr_song.favoriteToString().equals("Favorited")) {
+                favoriteSongs.add(curr_song);
+            }
+            if (curr_song.getRating() == Rating.FIVE) {
+                topRatedSongs.add(curr_song);
+            }
+        }
+        // We then create the new playlists and add them back
+        Playlist favoriteSongsPlaylist = new Playlist("Favorite Songs");
+        Playlist topRatedSongsPlaylist = new Playlist("Top Rated Songs");
+        for (int i = 0; favoriteSongs.size() > i; i++) {
+            favoriteSongsPlaylist.addSong(favoriteSongs.get(i));
+        }
+        for (int i = 0; topRatedSongs.size() > i; i++) {
+            topRatedSongsPlaylist.addSong(topRatedSongs.get(i));
+        }
+        user_playlists.add(favoriteSongsPlaylist);
+        user_playlists.add(topRatedSongsPlaylist);
+    }
+
+    public void playSong(Song song) {
+        this.musicPlayer.playSong(song);
     }
 
     public ArrayList<Album> getUserAlbums() {
@@ -53,6 +97,34 @@ public class userLibrary {
         }
         return new_songs;
     }
+
+    public void updateAutomaticPlaylist() {
+        ArrayList<Song> recentSongs = this.musicPlayer.getRecentlyPlayedSongs();
+        ArrayList<Song> frequentSongs = this.musicPlayer.getMostFrequentlyPlayedSongs();
+
+        // We first remove the previously created playlists (we move backwards to guarentee no index errors)
+        for (int i = user_playlists.size() - 1; i >= 0; i--) {
+            Playlist playlist = user_playlists.get(i);
+            if (playlist.getTitle().equals("Recent Songs") || playlist.getTitle().equals("Frequent Songs")) {
+                user_playlists.remove(i);
+            }
+        }
+
+        // Add updated playlists
+        Playlist frequentPlaylist = new Playlist("Frequent Songs");
+        Playlist recentPlaylist = new Playlist("Recent Songs");
+
+        for (Song song : recentSongs) {
+            recentPlaylist.addSong(song);
+        }
+        for (Song song : frequentSongs) {
+            frequentPlaylist.addSong(song);
+        }
+
+        user_playlists.add(frequentPlaylist);
+        user_playlists.add(recentPlaylist);
+    }
+
 
     public ArrayList<Playlist> getUserPlaylists() {
         ArrayList<Playlist> new_playlists = new ArrayList<>();
@@ -107,13 +179,67 @@ public class userLibrary {
         return searchResults;
     }
 
+    public void updateGenrePlaylists() {
+        // First we remove all genre playlists
+        for (int i = user_playlists.size() - 1; i >= 0; i--) {
+            Playlist playlist = user_playlists.get(i);
+            if (userGenrePlaylist.containsKey(playlist.getTitle())) {
+                user_playlists.remove(i);
+            }
+        }
+
+        // We create a new playlist if they have more than 10 songs
+        for (Map.Entry<String, ArrayList<Song>> entry : userGenrePlaylist.entrySet()) {
+            String genre = entry.getKey();
+            ArrayList<Song> songs = entry.getValue();
+            if (songs.size() >= 10) {
+                Playlist playlist = new Playlist(genre);
+                for (Song song : songs) {
+                    playlist.addSong(song);
+                }
+                System.out.println("Adding new playlist for genre: " + genre); // Debugging line
+
+                this.user_playlists.add(playlist);
+            }
+        }
+    }
+
     public void addAlbum(Album album) {
+        Scanner scanner = new Scanner(System.in);
         this.informationDatabase.markAlbumInLibrary(album.getTitle());
         user_albums.add(album);
+        // We ask if you want to add the songs to your library as well
+        System.out.println("Do you want to add all the songs to your album too?: (YES/NO");
+        String choice = scanner.nextLine();
+        if (choice.equals("YES")) {
+            for (Song song : album.getTracks()) {
+                user_songs.add(song);
+                // Add to genreplaylists
+                if (userGenrePlaylist.containsKey(song.getGenre())) {
+                    userGenrePlaylist.get(song.getGenre()).add(song);
+                }
+                else {
+                    String genre = song.getGenre();
+                    ArrayList<Song> songs = new ArrayList<>();
+                    songs.add(song);
+                    userGenrePlaylist.put(genre, songs);
+                }
+            }
+        }
     }
 
     public void addSong(Song song) {
+        System.out.println(song.getGenre());
         user_songs.add(song);
+        // We add to our hash in case
+        if (userGenrePlaylist.containsKey(song.getGenre())) {
+            userGenrePlaylist.get(song.getGenre()).add(song);
+        }
+        if (!userGenrePlaylist.containsKey(song.getGenre())) {
+            ArrayList<Song> new_songs = new ArrayList<>();
+            new_songs.add(song);
+            userGenrePlaylist.put(song.getGenre(),new_songs);
+        }
     }
 
     public void deletePlaylist(String playlistName) {
@@ -128,7 +254,7 @@ public class userLibrary {
         user_playlists.add(playlist);
     }
 
-    private void insertionSort(Song[] songs, String[] data_types) {
+    public void insertionSort(Song[] songs, String[] data_types) {
         // We sort our strings, moving our songs array periodically as well
         for (int i = 1; i < data_types.length; i++) {
             String key = data_types[i];
@@ -145,6 +271,16 @@ public class userLibrary {
         }
     }
 
+    public ArrayList<Song> getSongsByGenre(String genre) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : user_songs) {
+            if (song.getGenre().equals(genre)) {
+                songs.add(song);
+            }
+        }
+        return songs;
+    }
+
     public Song[] sortedSongs(String type) {
         //First, we gather all the songs of the specific type
         ArrayList<Song> searchResults = new ArrayList<>();
@@ -152,20 +288,20 @@ public class userLibrary {
         if (type.equals("title")) {
             // We gather all the songs that match the search
             for (int i = 0; i < user_songs.size(); i++) {
-                    searchResults.add(user_songs.get(i));
-                    data_types.add(user_songs.get(i).getSongName());
+                searchResults.add(user_songs.get(i));
+                data_types.add(user_songs.get(i).getSongName());
             }
         }
         else if (type.equals("artist")) {
             for (int i = 0; i < user_songs.size(); i++) {
-                    searchResults.add(user_songs.get(i));
-                    data_types.add(user_songs.get(i).getArtist());
+                searchResults.add(user_songs.get(i));
+                data_types.add(user_songs.get(i).getArtist());
             }
         }
         else {
             for (int i = 0; i < user_songs.size(); i++) {
-                    searchResults.add(user_songs.get(i));
-                    data_types.add(user_songs.get(i).getRating().toString());
+                searchResults.add(user_songs.get(i));
+                data_types.add(user_songs.get(i).getRating().toString());
             }
         }
         // We sort our data type array with insertion sort, moving our song list as well

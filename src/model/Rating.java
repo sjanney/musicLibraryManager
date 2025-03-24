@@ -1,5 +1,5 @@
 package model;
 
-enum Rating {
+public enum Rating {
     None, ONE, TWO, THREE, FOUR, FIVE
 }

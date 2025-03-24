@@ -279,7 +279,8 @@ public class mainUI {
             String[] headers = {"Option", "Description"};
             String[][] options = {
                     {"1", "Search By Title"},
-                    {"2", "Search By Artist"}
+                    {"2", "Search By Artist"},
+                    {"3", "Search By Genre"}
             };
             printTable(headers, options);
 
@@ -295,6 +296,8 @@ public class mainUI {
                         searchTerm = scanner.nextLine();
                     }
                     searchResults = user.searchSongByTitle(searchTerm);
+                    // After we do this, we sort the given input
+                    user.sortedSongs("Title");
                     break;
 
                 case 2:
@@ -304,8 +307,16 @@ public class mainUI {
                         searchTerm = scanner.nextLine();
                     }
                     searchResults = user.searchSongByArtist(searchTerm);
+                    user.sortedSongs("Artist");
                     break;
-
+                case 3:
+                    while (searchTerm.trim().isEmpty()) {
+                        System.out.print(YELLOW + "Enter Genre: " + RESET);
+                        searchTerm = scanner.nextLine();
+                    }
+                    searchResults = user.getSongsByGenre(searchTerm);
+                    user.sortedSongs("Genre");
+                    break;
                 default:
                     System.out.println("Invalid option selected.");
                     return;
@@ -601,18 +612,60 @@ public class mainUI {
                 {"4", "View Songs"},
                 {"5", "View Playlists"},
                 {"6", "Remove a Song"},
-                {"7", "Exit"}
+                {"7", "Play a Song"},
+                {"8", "Exit"}
         };
         printTable(headers, data);
     }
 
+
+
     public void printSongs() {
         ArrayList<Song> songs = user.getUnprotectedSongs();
         String[] resultHeaders = {"Title", "Artist", "Album", "Favorite?", "Rating"};
+        // First, we sort all the songs
+        Song[] temp = new Song[songs.size()];
+        String[] data_type = new String[songs.size()];
+        // We ask the user how they want the songs organized by
+        System.out.println(BLUE + "Searching for songs..." + RESET);
+        System.out.println(PURPLE + "How do you want the songs to be organized by? (Title, Artist, Rating): " + RESET);
+        String type = scanner.nextLine();
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = songs.get(i);
+            if (type.equals("Title")) {
+                data_type[i] = temp[i].getSongName();
+            }
+            else if (type.equals("Artist")) {
+                data_type[i] = temp[i].getArtist();
+            }
+            else {
+                if (temp[i].getRating() == Rating.None) {
+                    data_type[i] = "0";
+                }
+                else if (temp[i].getRating() == Rating.ONE) {
+                    data_type[i] = "1";
+                }
+                else if (temp[i].getRating() == Rating.TWO) {
+                    data_type[i] = "2";
+                }
+                else if (temp[i].getRating() == Rating.THREE) {
+                    data_type[i] = "3";
+                }
+                else if (temp[i].getRating() == Rating.FOUR) {
+                    data_type[i] = "4";
+                }
+                else if (temp[i].getRating() == Rating.FIVE) {
+                    data_type[i] = "5";
+                }
+            }
+        }
+
+        // We then sort the songs based on the data type
+        user.insertionSort(temp, data_type);
         String[][] resultData = new String[songs.size()][5];
 
         for (int i = 0; i < songs.size(); i++) {
-            Song currentSong = songs.get(i);
+            Song currentSong = temp[i];
             resultData[i][0] = currentSong.getSongName();
             resultData[i][1] = currentSong.getArtist();
             // Assuming a getAlbum() method exists; if not, adjust as needed.
@@ -699,9 +752,11 @@ public class mainUI {
         while (libraryMode) {
             displayUserLibraryOptions();
             int choice = getUserChoice();
-
+            // We keep all the playlists updated each cycle
+            this.user.updateAutomaticPlaylist();
+            this.user.updateUserCuratedPlaylist();
+            this.user.updateGenrePlaylists();
             switch (choice) {
-
                 case 1:
                     searchSong("User Library");
                     promptEnterToContinue();
@@ -721,7 +776,7 @@ public class mainUI {
 
                 case 5:
                     viewPlaylists();
-
+                    break;
                 case 6:
                     System.out.println(BLUE + "What Song do you want to remove?: " + RESET);
                     String song = scanner.nextLine();
@@ -732,7 +787,20 @@ public class mainUI {
                     else {
                         System.out.println(RED + "ERROR: Song not found" + RESET);
                     }
+                    break;
                 case 7:
+                    System.out.println(GREEN + "What song do you want to play: " + RESET);
+                    String song_name = scanner.nextLine();
+                    ArrayList<Song> searchResult = user.searchSongByTitle(song_name);
+                    if (searchResult.size() == 0) {
+                        System.out.println(RED + "ERROR: Song not found" + RESET);
+                    }
+                    for (int i = 0; i < searchResult.size(); i++) {
+                        user.playSong(searchResult.get(i));
+                    }
+                    System.out.println(GREEN + "SUCCESSFULLY PLAYED: " + song_name + RESET);
+                    break;
+                case 8:
                     System.out.println(BLUE + "Returning to main menu..." + RESET);
                     libraryMode = false;
                     break;

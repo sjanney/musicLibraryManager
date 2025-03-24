@@ -9,6 +9,8 @@ public class musicPlayer {
     HashMap<Song,String> songStringNames;
     HashMap<String,Integer> frequencyCount;
     HashMap<String,Song> songHistory;
+    ArrayList<Song> favoriteSongs;
+    ArrayList<Song> topRatedSongs;
 
     musicPlayer() {
         this.recentlyPlayedSongs = new ArrayList<>();
@@ -16,6 +18,8 @@ public class musicPlayer {
         this.songHistory = new HashMap<>();
         this.songStringNames = new HashMap<>();
         this.frequencyCount = new HashMap<>();
+        this.favoriteSongs = new ArrayList<>();
+        this.topRatedSongs = new ArrayList<>();
     }
 
     public ArrayList<Song> getRecentlyPlayedSongs() {
@@ -24,6 +28,7 @@ public class musicPlayer {
     public ArrayList<Song> getMostFrequentlyPlayedSongs() {
         return mostFrequentlyPlayedSongs;
     }
+
 
     private void maintainSongLists() {
         // Limit recently played songs list to last 10
