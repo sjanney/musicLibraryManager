@@ -61,11 +61,11 @@ public class musicPlayer {
     private ArrayList<Song> compareSongs(ArrayList<Song> songs) {
         // To sort the array, we use a lamda function to make everything easier
         songs.sort((a, b) -> {
-            int freqA = a.getPlayCount();
-            int freqB = b.getPlayCount();
+            int playCountA = a.getPlayCount();
+            int playCountB = b.getPlayCount();
             // If they aren't equal, we return the larger of the 2
-            if (freqA != freqB) {
-                return freqB - freqA;
+            if (playCountA != playCountB) {
+                return playCountB - playCountA;
             } else { // We just compare my index
                 return Integer.compare(recentlyPlayedSongs.lastIndexOf(b), recentlyPlayedSongs.lastIndexOf(a));
             }
