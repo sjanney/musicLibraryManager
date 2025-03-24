@@ -52,6 +52,9 @@ public class songTests {
         //Testing invalid rating
         test_song.setRating(999);
         assertEquals(Rating.None, test_song.getRating());
+
+        test_song.setRating(-3);
+        assertEquals(Rating.None, test_song.getRating());
     }
 
     @Test
@@ -93,5 +96,28 @@ public class songTests {
         System.out.println(test_song.favoriteToString());
         System.out.println(test_song.ratingToString());
         System.out.println(test_song.getRating());
+    }
+
+    @Test
+    public void playCountTest(){
+        Song test_song = new Song("title", "artist", "album","test");
+        test_song.addPlayCount();
+        assertEquals(1, test_song.getPlayCount());
+        test_song.addPlayCount();
+        assertEquals(2, test_song.getPlayCount());
+        test_song.addPlayCount();
+        assertEquals(3, test_song.getPlayCount());
+        test_song.addPlayCount();
+        assertEquals(4, test_song.getPlayCount());
+        test_song.addPlayCount();
+        assertEquals(5, test_song.getPlayCount());
+    }
+
+    @Test
+    public void GenreTest(){
+        Song test_song = new Song("title", "artist", "album","ROCK");
+        assertEquals("ROCK", test_song.getGenre());
+        test_song = new Song("title", "artist", "album", "POP");
+        assertEquals("POP", test_song.getGenre());
     }
 }
