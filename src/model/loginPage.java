@@ -33,11 +33,11 @@ public class loginPage {
             int iterations = 10000;
             int keyLength = 256;
             // Create a key using SHA-2 Algo
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            SecretKeyFactory key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             //Generate's new password in Base 64
             PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt_length, iterations, keyLength );
             // Convert to String
-            String hashedPassword = Base64.getEncoder().encodeToString(skf.generateSecret(spec).getEncoded() );
+            String hashedPassword = Base64.getEncoder().encodeToString(key.generateSecret(spec).getEncoded() );
 
             // Then we finally place them inside of our userdatabase
             String[] auth_data = new String[2];
@@ -74,10 +74,10 @@ public class loginPage {
         try {
             int iterations = 10000;
             int keyLength = 256;
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            SecretKeyFactory key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             byte[] saltBytes = Base64.getDecoder().decode(storedSalt);
             PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), saltBytes, iterations, keyLength);
-            String hashedPassword = Base64.getEncoder().encodeToString(skf.generateSecret(spec).getEncoded());
+            String hashedPassword = Base64.getEncoder().encodeToString(key.generateSecret(spec).getEncoded());
 
             // Compare the newly hashed password with the stored hashed password
             if (hashedPassword.equals(storedHashedPassword)) {
