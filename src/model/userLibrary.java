@@ -197,7 +197,6 @@ public class userLibrary {
                 for (Song song : songs) {
                     playlist.addSong(song);
                 }
-                System.out.println("Adding new playlist for genre: " + genre); // Debugging line
 
                 this.user_playlists.add(playlist);
             }
@@ -209,7 +208,7 @@ public class userLibrary {
         this.informationDatabase.markAlbumInLibrary(album.getTitle());
         user_albums.add(album);
         // We ask if you want to add the songs to your library as well
-        System.out.println("Do you want to add all the songs to your album too?: (YES/NO");
+        System.out.println("Do you want to add all the songs to your album too?: (YES/NO)");
         String choice = scanner.nextLine();
         if (choice.equals("YES")) {
             for (Song song : album.getTracks()) {

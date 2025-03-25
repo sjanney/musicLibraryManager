@@ -635,7 +635,7 @@ public class mainUI {
                 {"6", "Remove a Song"},
                 {"7", "Play a Song"},
                 {"8", "Shuffle Songs"},
-                {"8", "Exit"}
+                {"9", "Exit"}
         };
         printTable(headers, data);
     }
